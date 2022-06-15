@@ -39,11 +39,12 @@ int main() {
         fo(i, n) cin >> a[i];
 
         int lo = 0, hi = 0, currSum = 0, currLen = INT_MIN;
-        fo(hi, n){
+        while(lo < n && hi < n){
             currSum += a[hi];
             if(currSum == s) currLen = max(currLen, hi - lo + 1);
-            else if(currSum > s){
-                currSum -= a[lo]++;
+            if(currSum <= s) hi++;
+            else{
+                currSum -= (a[lo++]+a[hi]);
             }
         }
         cout <<(currLen == INT_MIN ? -1 : n-currLen)<<endl;
