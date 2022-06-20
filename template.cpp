@@ -1,23 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define fo(i,n) for(i=0;i<n;i++)
+#define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
-#define sz(a)   (int)a.size()
+#define sz(a) (int)a.size()
 #define F first
 #define S second
+#define typeof(x) typeid(x).name()
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
 #define all(x) x.begin(), x.end()
 #define sortall(x) sort(all(x))
 #define PI 3.1415926535897932384626
 typedef pair<int, int>	pii;
-typedef pair<ll, ll>	pl;
+typedef pair<ll, ll>	pll;
 typedef vector<int>		vi;
 typedef vector<ll>		vl;
 typedef vector<pii>		vpii;
-typedef vector<pl>		vpll;
+typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 
