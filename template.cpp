@@ -4,6 +4,7 @@ using namespace std;
 #define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
+#define mp make_pair
 #define sz(a) (int)a.size()
 #define F first
 #define S second

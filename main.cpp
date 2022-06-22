@@ -5,6 +5,7 @@ using namespace std;
 #define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
+#define mp make_pair
 #define sz(a) (int)a.size()
 #define F first
 #define S second
@@ -22,6 +23,16 @@ typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 
+int getAPDiff(vi a){
+    int n = sz(a);
+    if(n==1) return 0;
+    int diff = a[1]-a[0];
+    for(int i = 2; i < n; i++){
+        if(a[i]-a[i-1] != diff) return -1;
+    }
+    return diff;
+}
+
 int main() {
     // makes I/O faster
     ios_base::sync_with_stdio(false);
@@ -32,31 +43,20 @@ int main() {
     freopen("output.txt", "w", stdout);
     #endif
 
-    int t; cin >>t;
-    
-    while(t--){
-        int n, q;
-        cin>>n>>q;
-        int a[n];
-        fo(i,n) cin>>a[i];
-        sort(a,a+n,greater<int>());
-        while(q--){
-            int sum = 0;
-            int query; cin>>query;
-            int i = 0;
-            int num = 0;
-            while(sum < query && i < n){
-                sum += a[i++];
-                num++;
-            }
-            if(sum < query) cout<<-1<<endl;
-            else cout<<num<<endl;
+    string s; cin>>s;
+    int n = sz(s);
+    vi a(n, 0);
+    fo(i, n){
+        a[s[i] - 'a']++;
+    }
+    int oddCount = 0;
+    fo(i, sz(a)){
+        if(a[i]%2 == 1){
+            oddCount++;
         }
     }
+    if(oddCount == 0 || oddCount%2 == 1)
+        cout<<"First"<<endl;
+    else
+        cout<<"Second"<<endl;
 }
-
-/* 
-_ _ _ _ 
-
-
-*/
