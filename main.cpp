@@ -23,14 +23,30 @@ typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 
-int getAPDiff(vi a){
-    int n = sz(a);
-    if(n==1) return 0;
-    int diff = a[1]-a[0];
-    for(int i = 2; i < n; i++){
-        if(a[i]-a[i-1] != diff) return -1;
+int query(int element, int k, int n, int a[]){
+    int numbers_after_k = 0, numbers_before_k = 0;
+    for(int i = k; i < n; i++){
+        if(a[i] != element)
+            return -1;
+        numbers_after_k++;
     }
-    return diff;
+    for(int j = k-2; j >= 0; j--){
+        if(a[j] != element)
+            break;
+        numbers_before_k++;
+    }
+    return n-(numbers_after_k + numbers_before_k + 1);
+}
+
+void solve(){
+    int n, k; cin>>n>>k;
+    int a[n];
+    fo(i,n){
+        cin>>a[i];
+    }
+    int element = a[k-1];
+    int ans = query(element,k,n,a);
+    cout<< ans;
 }
 
 int main() {
@@ -43,20 +59,6 @@ int main() {
     freopen("output.txt", "w", stdout);
     #endif
 
-    string s; cin>>s;
-    int n = sz(s);
-    vi a(n, 0);
-    fo(i, n){
-        a[s[i] - 'a']++;
-    }
-    int oddCount = 0;
-    fo(i, sz(a)){
-        if(a[i]%2 == 1){
-            oddCount++;
-        }
-    }
-    if(oddCount == 0 || oddCount%2 == 1)
-        cout<<"First"<<endl;
-    else
-        cout<<"Second"<<endl;
+    solve();
+    return 0;
 }
