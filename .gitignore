@@ -1,5 +1,4 @@
 .vscode/
 .cph/
 *.exe
-input.txt
-output.txt
+*.txt
