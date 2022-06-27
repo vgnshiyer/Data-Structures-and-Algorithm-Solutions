@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
@@ -25,8 +26,7 @@ typedef vector<vl>		vvl;
 
 int main() {
     // makes I/O faster
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    fast_read();
 
     #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);

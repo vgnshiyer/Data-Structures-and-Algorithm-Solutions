@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define typeof(x) typeid(x).name()
 #define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
+#define ull unsigned ll
 #define pb push_back
 #define mp make_pair
 #define sz(a) (int)a.size()
@@ -25,34 +25,37 @@ typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 
 void solve(){
-    int n; cin>>n;
-    int x, y; cin>>x>>y;
-    int l = x, r = y;
-    int number = 1;
-    for(int i = 1; i < n; i++){
-        cin>>x>>y;
-        if(x <= l && y >= r){
-            number = i+1;
+    int n, k; cin>>n>>k;
+    vi a(n);
+    fo(i, n) cin>>a[i];
+
+    int currXOR = 0, lo, hi = 0;
+    int minWindowSize = INT_MAX;
+    fo(lo, n){
+        while(currXOR < k && hi < n){
+            currXOR ^= a[hi++];
         }
-        else if(x < l || y > r){
-            number = -1;
+        if(currXOR >= k){
+            minWindowSize = min(minWindowSize, (hi - lo));
         }
-        l = min(l, x), r = max(r, y);
+        currXOR ^= a[lo];
     }
-    cout<<number<<endl;
+    (minWindowSize == INT_MAX) ? cout<<-1<<endl : cout<<minWindowSize<<endl;
 }
 
 int main() {
-    fast_read();
+    // makes I/O faster
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
     #ifndef ONLINE_JUDGE
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
     #endif
 
-    // int t; cin>>t;
-    // while(t--){
-    solve();
-    // }
+    int t; cin>>t;
+    while(t--){
+        solve();
+    }
     return 0;
 }
