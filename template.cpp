@@ -12,6 +12,7 @@ using namespace std;
 #define typeof(x) typeid(x).name()
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
+#define deb_array(arr) for(auto x : arr){cout<<x<<", ";}  cout<< endl;
 #define all(x) x.begin(), x.end()
 #define sortall(x) sort(all(x))
 #define PI 3.1415926535897932384626

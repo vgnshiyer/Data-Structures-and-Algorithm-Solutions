@@ -12,6 +12,7 @@ using namespace std;
 #define S second
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
+#define deb_array(arr) for(auto x : arr){cout<<x<<", ";}  cout<<endl;
 #define all(x) x.begin(), x.end()
 #define sortall(x) sort(all(x))
 #define PI 3.1415926535897932384626
@@ -26,20 +27,36 @@ typedef vector<vl>		vvl;
 
 void solve(){
     int n; cin>>n;
-    int x, y; cin>>x>>y;
-    int l = x, r = y;
-    int number = 1;
-    for(int i = 1; i < n; i++){
-        cin>>x>>y;
-        if(x <= l && y >= r){
-            number = i+1;
+    int bills_of_25 = 0, bills_of_50 = 0;
+    int x;
+    bool violation = false;
+    fo(i,n){
+        cin>>x;
+        if(x == 25){
+            bills_of_25++;
         }
-        else if(x < l || y > r){
-            number = -1;
+        else if(x == 50){
+            if(bills_of_25 == 0){
+                violation = true;
+                break;
+            }
+            bills_of_25--;
+            bills_of_50++;
         }
-        l = min(l, x), r = max(r, y);
+        else if(x == 100){
+            if(bills_of_50 != 0 && bills_of_25 != 0){
+                bills_of_50--;
+                bills_of_25--;
+            } else if(bills_of_25 >= 3){
+                bills_of_25 -= 3;
+            } else{
+                violation = true;
+                break;
+            }
+        }
     }
-    cout<<number<<endl;
+
+    violation ? cout<<"NO"<<endl : cout<<"YES"<<endl;
 }
 
 int main() {
