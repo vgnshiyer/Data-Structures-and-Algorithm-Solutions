@@ -25,38 +25,22 @@ typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 
-void solve(){
-    int n; cin>>n;
-    int bills_of_25 = 0, bills_of_50 = 0;
-    int x;
-    bool violation = false;
-    fo(i,n){
-        cin>>x;
-        if(x == 25){
-            bills_of_25++;
-        }
-        else if(x == 50){
-            if(bills_of_25 == 0){
-                violation = true;
-                break;
-            }
-            bills_of_25--;
-            bills_of_50++;
-        }
-        else if(x == 100){
-            if(bills_of_50 != 0 && bills_of_25 != 0){
-                bills_of_50--;
-                bills_of_25--;
-            } else if(bills_of_25 >= 3){
-                bills_of_25 -= 3;
-            } else{
-                violation = true;
-                break;
-            }
-        }
-    }
+int lens[3];
+vi dp(5000, -1);
 
-    violation ? cout<<"NO"<<endl : cout<<"YES"<<endl;
+int getMaxRibbons(int n){
+    if(n == 0) return 0;
+    if(n < 0) return INT_MIN;
+    int &ans = dp[n];
+    if(ans != -1) return ans;
+    return ans = max({getMaxRibbons(n-lens[0]) + 1, getMaxRibbons(n-lens[1]) + 1, getMaxRibbons(n-lens[2]) + 1});
+}
+
+void solve(){
+    int n;cin>>n;
+    fo(i, 3) cin>>lens[i];
+    int ans = getMaxRibbons(n);
+    cout<<ans<<endl;
 }
 
 int main() {
