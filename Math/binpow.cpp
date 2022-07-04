@@ -11,6 +11,16 @@ int binpow(int a, int b){
     return res*res;
 }
 
+int binpowm(int a, int b, int m){
+    if(b==0)
+        return 1;
+    a %= m;
+    int res = binpowm(a,b/2,m);
+    if(b%2)
+        return res*res*a % m;
+    return res*res % m;
+}
+
 // exponent in iterative form
 int binpow2(int a, int b){
     int res = 1;

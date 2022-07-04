@@ -24,23 +24,39 @@ typedef vector<pii>		vpii;
 typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
+const int N = 1e6;
 
-int lens[3];
-vi dp(5000, -1);
+set<ll> sieve(ll n){
+    vector<bool> prime(n+1,true);
+    set<ll> primes;
+    prime[0] = prime[1] == false;
+    
+    // O(nlog(log(n))) // almost linear time complexity
+    for(ll i = 2LL; i <= n; i++){
+        if(prime[i]){
+            primes.insert(i);
+            for(ll j = i*i; j <= n; j += i){ // as i*i-1 would already be marked by multiple of other numbers
+                prime[j] = false;
+            }
+        }
+    }
+    return primes;
+}
 
-int getMaxRibbons(int n){
-    if(n == 0) return 0;
-    if(n < 0) return INT_MIN;
-    int &ans = dp[n];
-    if(ans != -1) return ans;
-    return ans = max({getMaxRibbons(n-lens[0]) + 1, getMaxRibbons(n-lens[1]) + 1, getMaxRibbons(n-lens[2]) + 1});
+bool is_perfect_square(ll n){
+    double sqrt_n = sqrt(n);
+    return sqrt_n == int(sqrt(n));
 }
 
 void solve(){
-    int n;cin>>n;
-    fo(i, 3) cin>>lens[i];
-    int ans = getMaxRibbons(n);
-    cout<<ans<<endl;
+    int n; cin>>n;
+    set<ll> s = sieve(N);
+    ll x; 
+    fo(i, n) {
+        cin>>x;
+        if(is_perfect_square(x) && s.find(int(sqrt(x))) != s.end()) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
 }
 
 int main() {
@@ -53,7 +69,7 @@ int main() {
 
     // int t; cin>>t;
     // while(t--){
-    solve();
+        solve();
     // }
     return 0;
 }
