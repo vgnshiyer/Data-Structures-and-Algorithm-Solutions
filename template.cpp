@@ -24,7 +24,8 @@ typedef vector<pii>		vpii;
 typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
-const int N = 1e6;
+// const int N = 1e6;
+// const ll MOD = 1e9 + 7;
 
 int main() {
     // makes I/O faster

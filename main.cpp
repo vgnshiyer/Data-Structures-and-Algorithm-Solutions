@@ -3,7 +3,7 @@ using namespace std;
 
 #define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define typeof(x) typeid(x).name()
-#define fo(i,n) for(int i=0;i<n;i++)
+#define fo(i,n) for(int i=1;i<=n;i++)
 #define ll long long
 #define pb push_back
 #define mp make_pair
@@ -24,39 +24,29 @@ typedef vector<pii>		vpii;
 typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
-const int N = 1e6;
-
-set<ll> sieve(ll n){
-    vector<bool> prime(n+1,true);
-    set<ll> primes;
-    prime[0] = prime[1] == false;
-    
-    // O(nlog(log(n))) // almost linear time complexity
-    for(ll i = 2LL; i <= n; i++){
-        if(prime[i]){
-            primes.insert(i);
-            for(ll j = i*i; j <= n; j += i){ // as i*i-1 would already be marked by multiple of other numbers
-                prime[j] = false;
-            }
-        }
-    }
-    return primes;
-}
-
-bool is_perfect_square(ll n){
-    double sqrt_n = sqrt(n);
-    return sqrt_n == int(sqrt(n));
-}
+// const int N = 1e6;
+// const ll MOD = 1e9 + 7;
+// const int INF = INT_MAX;
 
 void solve(){
-    int n; cin>>n;
-    set<ll> s = sieve(N);
-    ll x; 
+    int n; cin >> n;
+    map<ll, int> hm;
+    ll x;
+    ll loners = 0;
+    ll mx;
     fo(i, n) {
-        cin>>x;
-        if(is_perfect_square(x) && s.find(int(sqrt(x))) != s.end()) cout<<"YES"<<endl;
-        else cout<<"NO"<<endl;
+        cin >> x;
+        hm[x]++;
+        mx = max(mx, x);
     }
+    int maxcount = 0;
+    for(pair<ll, int> a : hm){
+        if(a.S == 1) loners++;
+        maxcount = max(maxcount, a.S);
+    }
+    ll res = (loners/2) + (loners%2);
+    if(hm[mx] == 1 && maxcount == 2) res++;
+    cout << res << endl;
 }
 
 int main() {
@@ -67,9 +57,9 @@ int main() {
     freopen("output.txt", "w", stdout);
     #endif
 
-    // int t; cin>>t;
-    // while(t--){
+    int t; cin>>t;
+    while(t--){
         solve();
-    // }
+    }
     return 0;
 }
