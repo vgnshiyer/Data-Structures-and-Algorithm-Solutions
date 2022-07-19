@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+AUTHOR: Vignesh Iyer
+ID: vgnshiyer
+LANG: C++
+University of Mumbai
+*/
+
 #define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 #define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long

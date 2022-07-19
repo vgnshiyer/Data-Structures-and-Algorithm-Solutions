@@ -17,5 +17,10 @@ int main(){
     }
 
 
+    // print 12 digits after decimal point
+    double answer = 0;
+    printf("%.12f",answer);
+
+
     return 0;
 }
