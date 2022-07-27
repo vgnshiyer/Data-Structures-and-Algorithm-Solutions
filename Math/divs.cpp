@@ -2,7 +2,7 @@
 using namespace std;
 
 // if i divides n, n/i also divides n
-int factors(int n){
+int divisors(int n){
     int count = 2;
     for(int i = 2; i*i <= n; i++){
         if(n%i == 0){

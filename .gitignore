@@ -2,3 +2,6 @@
 .cph/
 *.exe
 *.txt
+*.in
+*.out
+usaco.cpp

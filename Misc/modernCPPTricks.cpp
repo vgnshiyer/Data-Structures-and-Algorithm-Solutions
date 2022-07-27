@@ -1,6 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Return n mod m.  The C % operator is not enough because
+its behavior is undefined on negative numbers.
+*/
+
+int mod(int n, int m){
+    while(n < 0)
+        n += m;
+    return n%m;
+}
+
 // this is where i store interesting cpp tricks
 int main(){
     // cool trick in matrix

@@ -8,9 +8,9 @@ LANG: C++
 University of Mumbai
 */
 
-#define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
+#define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define typeof(x) typeid(x).name()
-#define fo(i,n) for(i=0;i<n;i++)
+#define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
 #define mp make_pair
@@ -33,38 +33,94 @@ typedef vector<pll>		vpll;
 typedef vector<vi>		vvi;
 typedef vector<vl>		vvl;
 // const int N = 1e6;
-// const ll MOD = 1e9 + 7;
+// const ll MOD = 998244353;
 // const int INF = INT_MAX;
-ll n, i, j, a, b;
 
-ll get_product(string a){
-    ll ans = 1;
-    for(char c : a){
-        ans *= (ll)(c-'A' + 1);
+void read_input(string filename){
+    freopen((filename + ".in").c_str(), "r", stdin);
+    freopen((filename + ".out").c_str(), "w", stdout);
+}
+
+bool is_prime[1000000];
+void sieve(ll n){
+    for(ll i = 0; i <= n; i++) is_prime[i] = 1;
+    is_prime[0] = is_prime[1] = 0;
+
+    for(ll i = 2; i <= n; i++){
+        if(is_prime[i]){
+            for(ll j = i*i; j <= n; j+=i){
+                is_prime[j] = 0;
+            }
+        }
     }
-    return ans;
+}
+
+bool __is_primes_generated__ = false;
+
+vector<ll> primes;
+void gen_primes(ll n){
+    __is_primes_generated__ = true;
+    sieve(n+1);
+    for(ll i = 2; i <= n; i++) if(is_prime[i]) primes.push_back(i);
+}
+
+vector<ll> gen_pfactors(ll n){
+    if(!__is_primes_generated__){
+        cerr << "generate primes pls!";
+        exit(1);
+    }
+    vector<ll> facs;
+
+    for(ll i = 0; primes[i]*primes[i] <= n, i < primes.size(); i++){
+        if(n % primes[i] == 0){
+            while(n % primes[i] == 0){
+                n /= primes[i];
+                facs.push_back(primes[i]);
+            }
+        }
+    }
+    if(n > 1) facs.push_back(n);
+    sort(facs.begin(), facs.end());
+    return facs;
 }
 
 void solve(){
-    string a, b;
-    cin >> a >> b;
-    ll prod1 = get_product(a), prod2 = get_product(b);
-    if(prod1%47 == prod2%47)
-        cout << "GO";
-    else
-        cout << "STAY";
+    ll n; cin >> n;
+    gen_primes(2e3);
+
+    vl facs = gen_pfactors(n);
+
+    unordered_map<ll, ll> cnt;
+    for(auto x : facs) ++cnt[x];
+
+    ll highest_power = 0;
+    for(auto p : cnt) highest_power = max(highest_power, p.S);
+
+    ll b = 0;
+    while((1 << b) < highest_power) ++b;
+
+    ll ops = b;
+    bool all_same = 1;
+    for(auto p : cnt) if(p.S != (1 << b)) all_same = false;
+
+    if(!all_same) ++ops;
+
+    ll ans = 1;
+    for(auto p : cnt) ans *= p.F;
+
+    cout << ans << " " << ops;
 }
 
 int main() {
     fast_read();
-
+    
     #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    read_input("file");
     #endif
 
-    // int t; cin>>t;
-    // while(t--)
+    int tc = 1;
+    // cin>>t;
+    while(tc--)
         solve();
     return 0;
 }
