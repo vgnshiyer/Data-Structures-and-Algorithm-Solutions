@@ -41,74 +41,27 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-bool is_prime[1000000];
-void sieve(ll n){
-    for(ll i = 0; i <= n; i++) is_prime[i] = 1;
-    is_prime[0] = is_prime[1] = 0;
-
-    for(ll i = 2; i <= n; i++){
-        if(is_prime[i]){
-            for(ll j = i*i; j <= n; j+=i){
-                is_prime[j] = 0;
-            }
-        }
-    }
-}
-
-bool __is_primes_generated__ = false;
-
-vector<ll> primes;
-void gen_primes(ll n){
-    __is_primes_generated__ = true;
-    sieve(n+1);
-    for(ll i = 2; i <= n; i++) if(is_prime[i]) primes.push_back(i);
-}
-
-vector<ll> gen_pfactors(ll n){
-    if(!__is_primes_generated__){
-        cerr << "generate primes pls!";
-        exit(1);
-    }
-    vector<ll> facs;
-
-    for(ll i = 0; primes[i]*primes[i] <= n, i < primes.size(); i++){
-        if(n % primes[i] == 0){
-            while(n % primes[i] == 0){
-                n /= primes[i];
-                facs.push_back(primes[i]);
-            }
-        }
-    }
-    if(n > 1) facs.push_back(n);
-    sort(facs.begin(), facs.end());
-    return facs;
-}
-
 void solve(){
-    ll n; cin >> n;
-    gen_primes(2e3);
+    ll n, k; cin >> n >> k;
+    string s; cin >> s;
+    ll c0 = 0, c1 = 0;
+    for(char c : s) c == '0' ? ++c0 : ++c1;
 
-    vl facs = gen_pfactors(n);
+    ll m = min(c1, c0);
+    c0 -= m;
+    c1 -= m;
+    ll best = max(c1,c0);
 
-    unordered_map<ll, ll> cnt;
-    for(auto x : facs) ++cnt[x];
-
-    ll highest_power = 0;
-    for(auto p : cnt) highest_power = max(highest_power, p.S);
-
-    ll b = 0;
-    while((1 << b) < highest_power) ++b;
-
-    ll ops = b;
-    bool all_same = 1;
-    for(auto p : cnt) if(p.S != (1 << b)) all_same = false;
-
-    if(!all_same) ++ops;
-
-    ll ans = 1;
-    for(auto p : cnt) ans *= p.F;
-
-    cout << ans << " " << ops;
+    if(best == 0)
+        cout << 0 << nline;
+    else if(k >= best)
+        cout << 1 << nline;
+    else if(k == 0){
+        cout << best << nline;
+    }
+    else{
+        cout << best/k + (best%k != 0) << nline;
+    }
 }
 
 int main() {
@@ -118,8 +71,8 @@ int main() {
     read_input("file");
     #endif
 
-    int tc = 1;
-    // cin>>t;
+    ll tc = 1;
+    cin>>tc;
     while(tc--)
         solve();
     return 0;
