@@ -31,9 +31,12 @@ def solve():
         if val == idx:
             ans.append(key)
     
-    ans.sort()
-    for name in ans:
-        print(name)
+    if(ans == []):
+      print("NONE")
+    else:
+      ans.sort()
+      for name in ans:
+          print(name)
 
 if __name__ == "__main__":
     sys.stdin = open('namenum.in', 'r')
