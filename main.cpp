@@ -10,7 +10,6 @@ University of Mumbai
 
 #define fast_read() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define typeof(x) typeid(x).name()
-#define fo(i,n) for(int i=0;i<n;i++)
 #define ll long long
 #define pb push_back
 #define mp make_pair
@@ -42,26 +41,36 @@ void read_input(string filename){
 }
 
 void solve(){
-    ll n, k; cin >> n >> k;
-    string s; cin >> s;
-    ll c0 = 0, c1 = 0;
-    for(char c : s) c == '0' ? ++c0 : ++c1;
-
-    ll m = min(c1, c0);
-    c0 -= m;
-    c1 -= m;
-    ll best = max(c1,c0);
-
-    if(best == 0)
-        cout << 0 << nline;
-    else if(k >= best)
-        cout << 1 << nline;
-    else if(k == 0){
-        cout << best << nline;
+    ll n; cin >> n;
+    vl a(n);
+    bool found_0 = false;
+    for(auto &x : a) {
+        cin >> x;
+        if(x % 10 == 5) x += 5;
+        if(x % 10 == 0) found_0 = true;
     }
-    else{
-        cout << best/k + (best%k != 0) << nline;
+    if(found_0){
+        for(int i = 0; i < n-1; i++){
+            if(a[i] != a[i+1]){
+                cout << "No\n";
+                return;
+            }
+        }
     }
+    else {
+        for(int i = 0; i < n; i++){
+            while(a[i] % 10 != 2)
+                a[i] += a[i]%10;
+        }
+        sortall(a);
+        for(int i = 0; i < n-1; i++){
+            if((a[i+1] - a[i])%20 != 0){
+                cout << "No\n";
+                return;
+            }
+        }
+    }
+    cout << "Yes\n";
 }
 
 int main() {
