@@ -26,23 +26,20 @@ void gen_primes(ll n){
     for(ll i = 2; i <= n; i++) if(is_prime[i]) primes.push_back(i);
 }
 
-vector<ll> gen_pfactors(ll n){
+set<ll> gen_pfactors(ll n){
     if(!__is_primes_generated__){
         cerr << "generate primes pls!";
         exit(1);
     }
-    vector<ll> facs;
+    set<ll> facs;
 
     for(ll i = 0; primes[i]*primes[i] <= n, i < primes.size(); i++){
-        if(n % primes[i] == 0){
-            while(n % primes[i] == 0){
-                n /= primes[i];
-                facs.push_back(primes[i]);
-            }
+        while(n % primes[i] == 0){
+            n /= primes[i];
+            facs.insert(primes[i]);
         }
     }
-    if(n > 1) facs.push_back(n);
-    sort(facs.begin(), facs.end());
+    if(n > 1) facs.insert(n);
     return facs;
 }
 
