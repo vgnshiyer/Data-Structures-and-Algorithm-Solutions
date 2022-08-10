@@ -16,28 +16,20 @@ void read_input(string filename){
 }
 
 int N;
-int triangle[1000][1000];
-vector<vector<int>> dp;
-
-int compute(int r, int c){
-    if(r == N) return 0;
-
-    int &ans = dp[r][c];
-    if(ans != -1) return ans; // saving recomputation
-
-    return ans = triangle[r][c] + max(compute(r+1, c), compute(r+1, c+1)); // memoization
-}
 
 void solve(){
     cin >> N;
-    dp.resize(N+1, vector<int>(N+1, -1));
+    int triangle[N+1][N+1];
     for(int i = 0; i < N; i++)
     for(int j = 0; j < i+1; j++){
         cin >> triangle[i][j];
     }
 
-    int best = compute(0,0);
-    cout << best << nline;
+    for(int r = N-2; r >= 0; r--)
+    for(int c = r; c >= 0; c--)
+        triangle[r][c] += max(triangle[r+1][c], triangle[r+1][c+1]);
+
+    cout << triangle[0][0] << nline;
 }
 
 int main() {
