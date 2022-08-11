@@ -36,52 +36,74 @@ void read_input(string filename){
 }
 
 int n;
-vi visited;
+vi a;
+int med;
+priority_queue<double> s;
+priority_queue<double,vector<double>,greater<double>> g;
 
-int get_min_distance(pii curr_pos, vpii a){
-    int min_dist = INT_MAX;
-    for(int i = 0; i < n; i++){
-        if(visited[i]) continue;
-        int dist = abs(curr_pos.F - a[i].F) + abs(curr_pos.S - a[i].S);
-        min_dist = min(min_dist, dist);
+int get_median(int x, int pos){
+    if(pos == 1){
+        s = priority_queue<double>(); // reset priority queue
+        g = priority_queue<double,vector<double>,greater<double>>();
+        med = x;
+        s.push(x);
+        return med;
     }
-    if(min_dist == INT_MAX) return (abs(curr_pos.F) + abs(curr_pos.S));
-    return min_dist;
-}
-
-int get_next_pos(pii curr_pos, vpii a){
-    int min_dist = INT_MAX, min_idx = -1;
-    pii ans;
-    for(int i = 0; i < n; i++){
-        if(visited[i]) continue;
-        int dist = abs(curr_pos.F - a[i].F) + abs(curr_pos.S - a[i].S);
-        if(dist < min_dist){
-            min_dist = dist;
-            ans = a[i];
-            min_idx = i;
+    if (s.size() > g.size()){
+        if (x < med){
+            g.push(s.top());
+            s.pop();
+            s.push(x);
+        }
+        else
+            g.push(x);
+        med = min(s.top(),g.top());
+    }
+    else if (s.size()==g.size()){
+        if (x < med){
+            s.push(x);
+            med = s.top();
+        }
+        else{
+            g.push(x);
+            med = g.top();
         }
     }
-    if(min_dist == INT_MAX) return {0,0};
-    visited[min_idx] = 1;
-    return ans;
+    else{
+        if (x > med){
+            s.push(g.top());
+            g.pop();
+            g.push(x);
+        }
+        else
+            s.push(x);
+        med = min(s.top(), g.top());
+    }
+    return med;
+}
+
+bool is_valid(vi arr){
+    int p1 = get_median(arr[0], 1);
+
+    for(int i = 1; i < n-1; i++){
+        int p2 = get_median(arr[i], 0);
+        if(p1 == p2) return false;
+        p1 = p2;
+    }
+    return true;
 }
 
 void solve(){
     cin >> n;
-    vpii a(n);
-    visited.resize(n, 0);
-    for(int i = 0; i < n; i++) cin >> a[i].F >> a[i].S;
+    a.resize(n);
+    for(int i = 1; i <= n; i++) a[i-1] = i;
 
-    int moves = 0;
-    int dist = 0;
-    pii curr_pos = {0,0};
-    while(moves <= n){
-        dist += get_min_distance(curr_pos, a);
-        curr_pos = get_next_pos(curr_pos, a);
-        moves++;
-    }
-
-    cout << dist << nline;
+    do{
+        if(is_valid(a)){
+            deb_array(a);
+            return;
+        }
+    }while(next_permutation(all(a)));
 }
 
 int main() {
