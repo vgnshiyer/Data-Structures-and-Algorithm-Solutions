@@ -27,7 +27,6 @@ int M, N;
 int best = -1;
 char dir;
 vector<vector<room>> castle;
-vector<vector<int>> visited;
 
 void update_len(int len, int r, int c, char w){
     if(len > best){ // if new len is greater, simple replace everything
@@ -64,11 +63,10 @@ void find_largest_room(unordered_map<int, int> room_len){
 }
 
 void DFS(int r, int c, int &len, int num){
-    if(visited[r][c]) return; // if module was visited earlier, skip it
+    if(castle[r][c].room_num) return; // if module was visited earlier, skip it
     
     len++;
     castle[r][c].room_num = num; // assign room number to module
-    visited[r][c] = 1;
 
     for(int i = 0; i < 4; i++)
         if((castle[r][c].wall & (1 << i)) == 0)
@@ -78,7 +76,6 @@ void DFS(int r, int c, int &len, int num){
 void solve(){
     cin >> M >> N;
     castle.resize(N, vector<room>(M));
-    visited.resize(N, vector<int>(M, 0));
     unordered_map<int, int> room_len;
 
     for(int r = 0; r < N; r++)
@@ -89,7 +86,7 @@ void solve(){
     int num_of_rooms = 0, num = 1, len, largest_room = -1;
     for(int r = 0; r < N; r++)
     for(int c = 0; c < M; c++){
-        if(visited[r][c])continue; // if room was visited skip it
+        if(castle[r][c].room_num)continue; // if room was visited skip it
         num_of_rooms++; // count connected components when u enter a new room
         
         len = 0;
