@@ -15,76 +15,100 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-vector<int> adj_list[2510];
-bool visited[2510];
+struct room{
+    int wall;
+    int room_num;
+};
 
-void add_edge(int x, int y){
-    adj_list[x].push_back(y);
-}
+int C[4] = {-1, 0, 1, 0};
+int R[4] = {0, -1, 0, 1};
+int walls[2] = {-1,-1};
+int M, N;
+int best = -1;
+char dir;
+vector<vector<room>> castle;
+vector<vector<int>> visited;
 
-int N, M;
-
-int get_destination(int s, int d){
-    switch (d){
-    case 0:
-        return s-1;
-    case 1:
-        return s-M;
-    case 2:
-        return s+1;
-    case 3:
-        return s+M;
-    default:
-        break;
+void update_len(int len, int r, int c, char w){
+    if(len > best){ // if new len is greater, simple replace everything
+        best = len;
+        walls[0] = r, walls[1] = c;
+        dir = w;
     }
-}
-
-void print_graph(int total){
-    for(int i = 1; i <= total; i++){
-        cout << i << "->";
-        for(int k = 0; k < adj_list[i].size(); k++){
-            cout << adj_list[i][k] << "->";
+    else if(len == best){
+        if(c < walls[1]){ // priority to west (minimize c)
+            walls[0] = r;
+            walls[1] = c;
+            dir = w;
         }
-        cout << "\n";
+        else if(c == walls[1]) // tied? check south dir
+            if(r > walls[0]){
+                walls[0] = r;
+                dir = w;
+            }
+        else if(c == walls[1] && r == walls[0]) // still tied? check north wall or east wall
+            dir = w;
     }
 }
 
-int DFS(int x, int &count){
-    visited[x] = true;
-    count++;
-    for(int next : adj_list[x])
-        if(!visited[next])
-            DFS(next, count);
+void find_largest_room(unordered_map<int, int> room_len){
+    for(int r = 0; r < N; r++)
+    for(int c = 0; c < M; c++){
+        // check if we can break the east wall and extend our current room?
+        if(c < M-1 && castle[r][c].room_num != castle[r][c+1].room_num)
+            update_len(room_len[castle[r][c].room_num] + room_len[castle[r][c+1].room_num], r, c, 'E');
+        // check if we can break the north wall and extend our current room?
+        if(r && castle[r][c].room_num != castle[r-1][c].room_num)
+            update_len(room_len[castle[r][c].room_num] + room_len[castle[r-1][c].room_num], r, c, 'N');
+    }
+}
+
+void DFS(int r, int c, int &len, int num){
+    if(visited[r][c]) return; // if module was visited earlier, skip it
+    
+    len++;
+    castle[r][c].room_num = num; // assign room number to module
+    visited[r][c] = 1;
+
+    for(int i = 0; i < 4; i++)
+        if((castle[r][c].wall & (1 << i)) == 0)
+            DFS(r+R[i], c + C[i], len, num); // explore the connected modules
 }
 
 void solve(){
     cin >> M >> N;
-    int total = N*M;
-    for(int node = 1; node <= total; node++){
-        int x; cin >> x;
-        for(int c = 0; c < 4; c++)
-            if((x & (1 << c)) == 0)
-                add_edge(node, get_destination(node, c));
+    castle.resize(N, vector<room>(M));
+    visited.resize(N, vector<int>(M, 0));
+    unordered_map<int, int> room_len;
+
+    for(int r = 0; r < N; r++)
+    for(int c = 0; c < M; c++)
+        cin >> castle[r][c].wall;
+
+    // finding number of rooms is same as finding number of connected components in a graph
+    int num_of_rooms = 0, num = 1, len, largest_room = -1;
+    for(int r = 0; r < N; r++)
+    for(int c = 0; c < M; c++){
+        if(visited[r][c])continue; // if room was visited skip it
+        num_of_rooms++; // count connected components when u enter a new room
+        
+        len = 0;
+        DFS(r,c,len,num); // fully explore the new room and count its length
+        room_len[num] = len;
+        num++;
+        largest_room = max(largest_room, len); // update biggest room length
     }
 
-    // print_graph(total);
-    
-    // counting number of rooms
-    // same as counting number of connected components in a graph
-    int ans = 0, largest = -1;
-    for(int i = 1; i <= total; i++){
-        if(visited[i]) continue;
-        int count = 0;
-        DFS(i, count);
-        largest = max(largest, count); // largest room in the palace
-        ans++;
-    }
-    cout << ans << "\n";
-    cout << largest << "\n";
+    cout << num_of_rooms << nline;
+    cout << largest_room << nline;
+
+    find_largest_room(room_len);
+    cout << best << nline;
+    cout << walls[0] + 1 << " " << walls[1] + 1 << " " << dir << nline;
 }
 
 int main() {
-    read_input("file");
+    read_input("castle");
     int tc = 1;
     // cin >> tc;
     while(tc--)
