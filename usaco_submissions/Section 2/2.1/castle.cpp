@@ -29,7 +29,7 @@ char dir;
 vector<vector<room>> castle;
 
 void update_len(int len, int r, int c, char w){
-    if(len > best){ // if new len is greater, simple replace everything
+    if(len > best){ // if new len is greater, simply replace everything
         best = len;
         walls[0] = r, walls[1] = c;
         dir = w;
