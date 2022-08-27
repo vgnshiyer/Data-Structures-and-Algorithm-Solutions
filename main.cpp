@@ -20,47 +20,32 @@ using namespace std;
 #define PI 3.1415926535897932384626
 
 const ll MOD = 7 + 1e9;
-bool testcases = 1;
+bool testcases = 0;
 
 void read_input(string filename){
     freopen((filename + ".in").c_str(), "r", stdin);
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-ll n;
-typedef vector<ll> vl;
+int n, x;
 
 void solve(){
-    cin >> n;
-    vl A(n), B(n);
-    vl diffs;
-    for(int i = 0; i < n; i++) cin >> A[i];
-    for(int i = 0; i < n; i++){
-        cin >> B[i];
-        if(abs(A[i] - B[i]) > 0) diffs.pb(abs(A[i] - B[i]));
+    cin >> n >> x;
+    int price[n];
+    int pages[n];
+    for(int i = 0; i < n; i++) cin >> price[i];
+    for(int i = 0; i < n; i++) cin >> pages[i];
+
+    vector<vector<int>> dp(n+1, vector<int>(x+1, 0));
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= x; j++){
+            dp[i][j] = dp[i-1][j];
+            if(price[i-1] <= j)
+                dp[i][j] = max(pages[i-1] + dp[i-1][j-price[i-1]], dp[i][j]);
+        }
     }
 
-    sortall(diffs);
-    int N = sz(diffs);
-    vl pref(N);
-    ll prev = 0;
-    for(int i = 0; i < N; i++){
-        pref[i] = diffs[i];
-        if(i) pref[i] += pref[i-1];
-    }
-    if(N == 0){
-        cout << 0 << nline;
-        return;
-    }
-    if(N == 1){
-        cout << -1 << nline;
-        return;
-    }
-    if(pref[N-1]%pref[N-2] == 0 && pref[N-1]/pref[N-2] == 2){
-        cout << diffs[N-1] << nline;
-        return;
-    }
-    cout << -1 << nline;
+    cout << dp[n][x] << nline;
 }
 
 int main() {
