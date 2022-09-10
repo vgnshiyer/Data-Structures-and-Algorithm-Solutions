@@ -7,8 +7,6 @@ USER: Vignesh Iyer
 LANG: C++
 */
 
-/* FLOOD FILL Algorithm Example (DFS)*/
-
 #define ll long long
 #define nline "\n"
 #define F first
