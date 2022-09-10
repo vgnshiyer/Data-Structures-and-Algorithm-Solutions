@@ -21,6 +21,15 @@ Once we find a shorter path to either of the exit from a particular cell, we sim
 **Notice** that we do not have any visited boolean array to maintain cells that were visited previously. This is because here we not only care about if a cell is reachable or not, but also about the shortest path to the cell. Therefore, we always look for shorter paths reaching the particular cell.
 
 
+**Problem 5.** Cow Tours
+
+**Approach:**
+Here we find the shortest path between each pair of the nodes in the graph, using the floyd warshall's Algorithm. 
+Then we find the diameter for all the nodes in the existing graph.
+
+For each edge that does not exist, we calculate the diameter for that edge using the formula. diam[i] + distance(i, j) + diam[j];
+And we simply print the max value.
+
 **Problem 4.** Bessie Come Home
 
 **Approach:**
