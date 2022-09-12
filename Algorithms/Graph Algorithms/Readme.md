@@ -1,7 +1,16 @@
 ### Graph Algorithms
 
-##### Shortest Path
+### Shortest Path
 In graph theory, the problem of finding a path between two nodes in a graph, such that the sum of weights of the edges of the path is minimum, is known as the Shortest Path.
+
+**Problem Cues**
+If the problem wants an optimal path or the cost of a minimal route or journey, it is likely a shortest path problem. Even if a graph isn't obvious in a problem, if the problem wants the minimum cost of some process and there aren't many states, then it is usually easy to superimpose a graph on it. The big point here: shortest path = search for the minimal cost way of doing something.
+
+If the graph is unweighted, the shortest path contains a minimal number of edges. A breadth first search (BFS) will solve the problem in this case, using a queue to visit nodes in order of their distance from the source. If there are many vertices but few edges, this runs much faster than Dijkstra's algorithm.
+
+If negative weight edges are allowed, Dijkstra's algorithm breaks down. Fortunately, the Floyd-Warshall algorithm isn't affected so long as there are no negative cycles in the graph (if there is a negative cycle, it can be traversed arbitrarily many times to get ever `shorter' paths). So, graphs must be checked for them before executing a shortest path algorithm.
+
+It is possible to add additional conditions to the definition of shortest path (for example, in the event of a tie, the path with fewer edges is shorter). So long as the distance function can be augmented along with the comparison function, the problem remains the same. In the example above, the distance function contains two values: weight and edge count. Both values would be compared if necessary.
 
 ##### Below are some of the most commonly used algorithms.
 Each Algorithm has its own advantages and disadvantages. Depending on the use case, it is expected by a good problem solver to select the most appropriate and efficient algorithm.
@@ -25,3 +34,56 @@ The Bellman Ford Algorithm is a Single Source Shortest Path Algorithm. However, 
 Time Complexity: O(EV)
 
 ![Alt text](graph.jpeg?raw=true "Graph Algorithms Side-By-Side")
+
+### Minimum Spanning Trees
+**An analogy:** Farmer John is bringing internet connectivity to all farms in the area. He has ordered a high speed connection for his farm and is going to share his connectivity with the other farmers. To minimize cost, he wants to minimize the length of optical fiber to connect his farm to all the other farms.
+
+Given a list of how much fiber it takes to connect each pair of farms, find the minimum amount of fiber needed to connect them all together. Each farm must connect to some other farm such that a path exists from any farm to any other farm. Some farms might have 1, 2, 3, or more connections to them.
+
+**The Abstraction:**
+Given: an undirected, connected graph with weighted edges
+
+A spanning tree of a graph is any sub-graph which is a connected tree (i.e., there exists a path between any nodes of the original graph which lies entirely in the sub-graph).
+
+A minimal spanning tree is a spanning tree which has minimal `cost' (where cost is the sum of the weights of the edges in the tree).
+
+**Problem Cues:**
+If the problem mentions wanting an optimal, connected sub-graph, a minimum cost way to connect a system together, or a path between any two parts of the system, it is very likely to be a minimum spanning tree problem.
+
+If you subject the tree to any other constraints (no two nodes may be very far away or the average distance must be low), this algorithm breaks down and altering the program to handle such constraints is very difficult.
+
+There is obviously no problem with multiple edges between two nodes (you ignore all but the smallest weight).
+
+Prim's algorithm does not extend to directed graphs (where you want strong connectedness), either.
+
+TO - BE - WRITTEN (prims and kruskals)
+##### Below are some of the most commonly used algorithms.
+
+* **Prim's Algorithm**
+A greedy algorithm which always starts from one of the nodes in the graph, moves through several adjacent nodes, in order to explore the entire graph. At every point, the algorithm always selects the edge with minimum weight that is connected to the nodes currently in the tree.
+
+* **Kruskal's Algorithm**
+Another Greedy algorithm which works on the same principle of selecting the least cost edges available. But there is a difference here. It selects the edges available in such a way that the resulting MST does not form a cycle in it. If it does, then the edge will be discarded.
+
+### The Dichotomies between MSTs and Shortest path Algos
+
+***Shortest Paths*** Here, you are only concerned about the path to travel between two nodes. You optimize this path in such a way that the total cost to travel from it is minimized. 
+
+***MSTs*** Here, you start from one point, with the goal of reaching(spanning) all the nodes present in the graph. Therefore, you may not end up always chosing the shortest path between any two nodes. Instead, you focus on chosing the path which will lead to a shorter path for all the nodes in your graph.
+
+**An analogy to understand better:** You are a food delivery company. Your goal is to deliver food to multiple locations by covering the distance in the most optimal way with minimum possible time spent. => You will use Minimum Spanning Trees.
+
+If you want to deliver food only to one location intead, => You will use Shortest Paths.
+
+**An Example** 
+![Alt text](b6Ggp.png?raw=true "example")
+
+The spanning tree looks like below. This is because if we add up the edges in this configuration, we get the least total cost possible: 2+5+14+4=25.
+
+(1)   (4)
+  \   /
+   (2)           (Important detail to notice -> no. of edges in an MST = no. of vertices -1)
+  /   \          (no. of MSTs possible = eC(n-1) - no. of cycles)
+(3)   (5)
+
+Notice that the minimum cost according to the spanning tree to reach node (4) from node (1) is 7(2+5). However, according to shortest path algorithms, we would find that there is a direct shorter path from node (1)  to (4).

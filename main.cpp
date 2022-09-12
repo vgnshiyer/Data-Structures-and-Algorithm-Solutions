@@ -20,51 +20,46 @@ using namespace std;
 #define PI 3.1415926535897932384626
 
 const ll MOD = 7 + 1e9;
-bool testcases = 1;
+bool testcases = 0;
 
 void read_input(string filename){
     freopen((filename + ".in").c_str(), "r", stdin);
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-int n;
+int R, C, cnt = 0;
+string tgt;
+
+void check(vector<vector<char>> mat, int i, int j, int len){
+    if(len == tgt.length()){
+        cnt++;
+        return;
+    }
+    if(i < 0 || i >= R || j < 0 || j >= C || mat[i][j] != tgt[len]) return;
+
+    char curr_char = mat[i][j];
+    mat[i][j] = '#';
+    check(mat, i+1, j, len+1);
+    check(mat, i-1, j, len+1);
+    check(mat, i, j+1, len+1);
+    check(mat, i, j-1, len+1);
+    mat[i][j] = curr_char;
+}
 
 void solve(){
-    cin >> n;
-    vector<ll> A1(n), A2(n);
-    set<ll> P1, P2;
-    for(int i = 0; i < n; i++){
-        cin >> A1[i];
-        P1.insert(A1[i]);
-    }
-    for(int i = 0; i < n; i++){
-        cin >> A2[i];
-        P2.insert(A2[i]);
-    }
+    cin >> R >> C;
+    vector<vector<char>> mat(R, vector<char>(C));
+    for(int i = 0; i < R; i++)
+    for(int j = 0; j < C; j++)
+        cin >> mat[i][j];
+    cin >> tgt;
 
-    vector<ll> s1(n), s2(n), s3(n);
-    ll m1 = -1, m2 = -1, m3 = -1;
-    for(int i = 0; i < n; i++){
-        ll a = distance(P1.begin(), P1.find(A1[i]));
-        ll b = distance(P2.begin(), P2.find(A2[i]));
-        s1[i] = a;
-        m1 = max(m1, s1[i]);
-        s2[i] = b;
-        m2 = max(m2, s2[i]);
-        s3[i] = a+b;
-        m3 = max(m3, s3[i]);
+    for(int i = 0; i < R; i++)
+    for(int j = 0; j < C; j++){
+        if(mat[i][j] == tgt[0])
+            check(mat, i, j, 0);
     }
-    bool qualified[n] = {false};
-    
-    for(int i = 0; i < n; i++){
-        if(s1[i] == m1) qualified[i] = true;
-        if(s2[i] == m2) qualified[i] = true;
-        if(s3[i] == m3) qualified[i] = true;
-    }
-
-    int cnt = 0;
-    for(int i = 0; i < n; i++) if(qualified[i]) cnt++;
-    cout << cnt << nline;
+    cout << cnt/4 << nline;
 }
 
 int main() {
