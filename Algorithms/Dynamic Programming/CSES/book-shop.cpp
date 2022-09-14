@@ -14,7 +14,6 @@ using namespace std;
 int n, x;
 vector<int> price, pages;
 vector<vector<int>> dp;
-vector<vector<int>> dp;
 
 int max_pages_iterative(){
     vector<vector<int>> dp(n+1, vector<int>(x+1, 0));
