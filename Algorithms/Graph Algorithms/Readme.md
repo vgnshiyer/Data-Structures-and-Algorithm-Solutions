@@ -65,6 +65,8 @@ A greedy algorithm which always starts from one of the nodes in the graph, moves
 * **Kruskal's Algorithm**
 Another Greedy algorithm which works on the same principle of selecting the least cost edges available. But there is a difference here. It selects the edges available in such a way that the resulting MST does not form a cycle in it. If it does, then the edge will be discarded.
 
+In order to implement Kruskal's Algorithm, we use the concept of Disjoint Set Union. Here, the nodes belonging to the edges that are added to the MST are considered to be part of a Disjoint Set. Once an edge is added, we check whether the nodes belong to the same subset or not, using the Find operation. If not, we simple unite the two subsets using the Union Operation. If they do, the edge forms a cycle. 
+
 ### The Dichotomies between MSTs and Shortest path Algos
 
 ***Shortest Paths*** Here, you are only concerned about the path to travel between two nodes. You optimize this path in such a way that the total cost to travel from it is minimized. 
