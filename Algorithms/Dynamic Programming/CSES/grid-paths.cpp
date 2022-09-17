@@ -9,6 +9,7 @@ int n;
 char grid[1001][1001];
 vector<vector<int>> dp(1001, vector<int>(1001, -1));
  
+// top-down recursive
 int compute(int i, int j){
     if(grid[i][j] == '*') return 0;
     if(i > n || j > n) return 0;

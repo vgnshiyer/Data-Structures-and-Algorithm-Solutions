@@ -30,6 +30,7 @@ int getLIS_recursive(vector<int> a, int n, int i,int prev){
     return ans = max(include, exclude); // memoization
 }
 
+// BOTTOM-UP Dynamic Programming Approach
 int getLIS_iterative(vector<int> a, int n){
     vector<int> dp2(n);
     dp2[0] = 1;
