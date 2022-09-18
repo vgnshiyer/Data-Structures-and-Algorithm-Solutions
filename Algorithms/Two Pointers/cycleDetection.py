@@ -21,8 +21,9 @@ def removeCycle(head):
     while slow != fast:
         fast = fast.next.next
         slow = slow.next
-    fast = head
+    slow = head
     while fast.next != slow.next:
         fast = fast.next
         slow = slow.next
-    slow.next = None
+    fast.next = None
+    return head
