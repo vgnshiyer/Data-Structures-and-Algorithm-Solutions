@@ -17,10 +17,31 @@ void binary_representation(int x){
         if(x&(1<<i)) cout << 1;
         else cout << 0;
     }
+    cout << endl;
+}
+
+int num_of_ones(int n){
+    int cnt = 0;
+    while(n){
+        n &= (n-1);
+        cnt++;
+    }
+    return cnt;
+}
+
+uint32_t reverseBits(uint32_t n) {
+    uint32_t answer = 0;
+    
+    for(int i = 31; i >= 0; i--)
+        if(n & (1 << i)) answer |= (1 << (31-i));
+    binary_representation(int(answer));
+    return answer;
 }
 
 int main(){
     // following prints the binary representation of the number 22
-    binary_representation(22); // 00000000000000000000000000010110
+    binary_representation(24); // 00000000000000000000000000010110
+    cout << num_of_ones(5) << endl; // 2 (0101)
+    cout << "(" << reverseBits(uint32_t(24)) << ")x" << endl;
     return 0;
 }
