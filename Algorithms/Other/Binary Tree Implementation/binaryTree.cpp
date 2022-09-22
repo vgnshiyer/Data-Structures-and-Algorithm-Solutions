@@ -120,14 +120,17 @@ class binaryTree{
             }
         }
 
+        // count number of nodes in a tree
         int countNodes(Node *root){
             return root ? 1 + countNodes(root->left) + countNodes(root->right) : 0;
         }
 
+        // calculate height of a tree
         int treeHeight(Node *root){
             return root ? 1 + max(treeHeight(root->left), treeHeight(root->right)) : 0;
         }
 
+        // calculate the diameter of a tree(longest path in a tree)
         int treeDiameter(Node *root){
             return root ? max({treeDiameter(root->left), treeDiameter(root->right), 1 + treeHeight(root->left) + treeHeight(root->right)}) : 0;
         }
