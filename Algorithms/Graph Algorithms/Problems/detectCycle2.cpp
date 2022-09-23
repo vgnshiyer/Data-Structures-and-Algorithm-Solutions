@@ -1,20 +1,13 @@
-/*
-given an directed graph, return whether there is a cycle present in the graph.
-        0
-       / \
-      1   2        cycle here is 2->3->4->2 ... 
-         / \
-        3---4
-
-Analysis:
-- Here we cannot use the previous algorithm to detect cycle in an unidirected graph.
-proof: 
-- We maintain two arrays, one for visited, and one for the being_explored(rec stack) nodes.
-- If we encounter a node which is not visited, we explore it and mark it as visited in our boolean visited array
-- If the node is visited and which is being explored, this means that we have entered a cycle. 
-*/
 #include <bits/stdc++.h>
 using namespace std;
+
+/*
+    0
+   / \
+  1   2        GRAPH used to demonstrate the algo
+     / \
+    3---4
+*/
 
 const int N = 1e5;
 vector<int> adj_list[N];
