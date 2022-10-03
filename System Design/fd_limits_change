@@ -1,0 +1,27 @@
+############ Steps to edit fd limits ############  -> Kantilal Mishra
+
+prerequisites : Stop all cdc subscriptions (only avis and common this weekend for AZA)
+				Inform application teams about the downtime
+				setup meeting invite for change time (one review call with vishal before implementation)
+				
+1. Stop cdc access server and replication engine.
+2. login as root user.
+3. open /etc/security/limits.conf
+4. Edit below line with limit (1048576)
+	kafka   soft    nofile  2048
+	kafka   hard    nofile  16384
+5. Update scripts dir(/abgapps/scripts/cdc-open-files)
+	-> Update variables (
+		declare -i CurrSoftLim=1048576     (current vals)  declare -i CurrSoftLim=2048
+		declare -i threshold=10000					       declare -i threshold=512
+	)
+6. restart access server and replication engine.
+
+Subtasks:
+1. Check network in traffic in cloudwatch (find less traffic zone in weekend) -> Rajeet Yadav
+2. Create change ticket with VP approvals. -> Sneha Jaiswal
+3. Review these steps with Harsimran -> Sneha Jaiswal
+
+check current open files:-
+ps -aef | grep -v grep | grep kafka | grep dmts64 | awk '{print $2}'
+ls /proc/11260/fd | wc -l

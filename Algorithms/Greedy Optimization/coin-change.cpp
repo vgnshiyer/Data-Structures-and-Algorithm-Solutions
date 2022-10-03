@@ -20,8 +20,8 @@ int minCoins(vector<int> coins, int amount){
 }
 
 int main(){
-    vector<int> coins = {1,2,5,10,20,50,100,200};
-    int amount = 520;
+    ve20;ctor<int> coins = {1,2,5,10,20,50,100,200};
+    int amount = 5
     cout<<minCoins(coins, amount); // 4:- 200 + 200 + 100 + 20
     return 0;
 }

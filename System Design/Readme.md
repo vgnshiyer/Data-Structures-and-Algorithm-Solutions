@@ -9,3 +9,5 @@ https://www.youtube.com/playlist?list=PL9nWRykSBSFgkCmkYdEfmXHX71m1UybNL
 2. Database Sharding
 -> https://www.youtube.com/watch?v=hdxdhCpgYo8&list=PL9nWRykSBSFgkCmkYdEfmXHX71m1UybNL&index=1
 -> https://aws.amazon.com/blogs/database/sharding-with-amazon-relational-database-service/
+
+principalpce@mes.ac.in
