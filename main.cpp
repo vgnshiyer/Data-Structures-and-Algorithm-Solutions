@@ -19,7 +19,7 @@ using namespace std;
 #define nline "\n"
 #define PI 3.1415926535897932384626
 
-const ll MOD = 7 + 1e9;
+const ll MOD = 998244353;
 bool testcases = 1;
 
 void read_input(string filename){
@@ -27,8 +27,29 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
+/*
+Dividing X by 2^y is equivalent to right shifting X by y bits. 
+In order to make X as the minimum number, We want to unset the rightmost 1, from the index 1.(As xor of a number with itself is 0, we cannot take 0 as the answer. As the question says we need to do atleast 1 shift.)
+Therefore we count the distance of the 1st set bit from the index 0.
+
+eg. 
+
+111010101
+^111010101
+-------------
+100111111 (min val) It can be proved that any other computation will not give a smaller val
+*/
+
 void solve(){
-    
+    int n; cin >> n;
+    char bits[n]; cin >> bits;
+
+    int y = 1; // at least 1 shift has to be made
+    for(int i = 1; i < n; i++){
+        if(bits[i] == '1') break;
+        y++;
+    }
+    cout << y << nline;
 }
 
 int main() {
