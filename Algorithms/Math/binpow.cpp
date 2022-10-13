@@ -34,14 +34,17 @@ int binpow2(int a, int b){
 }
 
 //exponent modulo
-int binpow3(int a, int b, int m){
-    a %= m;
-    int res = 1;
-    while(b != 0){
-        if(b&1)
-            res *= a%m;
-        a *= a%m;
-        b >>= 1;
+ll binpow(ll a, ll b)
+{
+    ll ans=1;
+    
+    while(b>0)
+    {
+        if((b%2)==1){
+            ans=(ans*a)%MOD;
+        }
+        b/=2;
+        a=(a*a)%MOD;
     }
-    return res;
+    return ans;
 }

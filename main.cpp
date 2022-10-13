@@ -27,42 +27,40 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-vector<ll> a;
-int n;
+ll binpow(ll a, ll b)
+{
+    ll ans=1;
+    
+    while(b>0)
+    {
+        if((b%2)==1){
+            ans=(ans*a)%MOD;
+        }
+        b/=2;
+        a=(a*a)%MOD;
+    }
+    return ans;
+}
 
-void compute(ll sum, int max_len, int i, int &best){
-    if(i >= n){
-        best = min(best, max_len);
-        return;
-    }
-
-    ll temp = 0;
-    int len = 0;
-    while(temp < sum){
-        temp += a[i++];
-        len++;
-    }
-    max_len = max(len, max_len);
-    if(temp == sum){
-        compute(sum, max_len, i+1, best);
-    } else{
-        return;
-    }
+ll getCount(ll m, ll i){
+    ll ans = ((m >> (i+1)) << i);
+    if((m >> i) & 1) 
+        ans += (m & ((1 << i) - 1));
+    return ans;
 }
 
 void solve(){
-    cin >> n;
-    a.resize(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
+    ll n, m;
+    cin >> n >> m;
 
-    ll sum = 0;
-    int best = n;
-    for(int i = 0; i < n; i++){
-        sum += a[i];
-        compute(sum, i+1, i+1, best);
+    ll ans = 0;
+    for(int i = 0; i <= 32; i++){
+        if((1 << i) > m) break;
+        ll p = getCount(m+1, i);
+        p = binpow(p, n);
+        ans=(ans+((p*(1 << i))%MOD))%MOD;
     }
-
-    cout << best << nline;
+    cout << ans << nline;
 }
 
 int main() {
