@@ -11,7 +11,6 @@ using namespace std;
 #define all(x) x.begin(), x.end()
 #define sortall(x) sort(all(x))
 #define nline "\n"
-const ll MOD = 998244353;
 
 bool testcases = 1;
 
@@ -20,22 +19,8 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
-
 void solve(){
-    int n; cin >> n;
-    int a[n];
-    int zero = 0, one = 0, sum = 0;
-    for(int i = 0 ; i < n; i++){
-        cin >> a[i];
-        (a[i] == 0 ? zero++ : one++);
-    }
-
-    sum += min(zero, one);
-    if(one > zero){
-        int rem = max(zero, one) - min(zero, one);
-        sum += rem/3;
-    } 
-    cout << sum << nline;
+    
 }
 
 int main() {
