@@ -13,6 +13,10 @@ void buildTree(vector<int> arr, int idx, int l, int r){
     buildTree(arr, 2*idx, l, mid);
     buildTree(arr, 2*idx+1, mid+1, r);
     seg[idx] = seg[2*idx] + seg[2*idx+1];
+    // some other implementations
+    // seg[idx] = min(seg[2*idx], seg[2*idx+1]);
+    // seg[idx] = max(seg[2*idx], seg[2*idx+1]);
+    // seg[idx] = __gcd(seg[2*idx], seg[2*idx+1]);
 }
 
 int query(int idx, int l, int r, int ql, int qr){
