@@ -19,6 +19,10 @@ void read_input(string filename){
     freopen((filename + ".out").c_str(), "w", stdout);
 }
 
+void bruteForce(){
+    
+}
+
 void solve(){
     
 }
