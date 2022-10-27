@@ -12,7 +12,7 @@ using namespace std;
 #define sortall(x) sort(all(x))
 #define nline "\n"
 
-bool testcases = 0;
+bool testcases = 1;
 
 void read_input(string filename){
     freopen((filename + ".in").c_str(), "r", stdin);
@@ -23,21 +23,8 @@ void bruteForce(){
     
 }
 
-// we track the distance from both the nodes to their lowest common ancestors.. and count the number of steps
-ll dist(ll a, ll b){
-    if(a == b) return 0;
-
-    if(a > b) swap(a, b);
-    return 1 + dist(a, b/2);
-}
-
 void solve(){
-    int n; cin >> n;
-    ll x, y;
-    for(int i = 0; i < n; i++){
-        cin >> x >> y;
-        cout << dist(x, y) << nline;
-    }
+    
 }
 
 int main() {
