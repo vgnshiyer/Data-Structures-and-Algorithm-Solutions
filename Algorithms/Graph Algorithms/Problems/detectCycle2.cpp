@@ -19,13 +19,13 @@ void add_edge(int x, int y){
 }
 
 bool hasCycle(int x){
-    visited[x] = true;
     being_explored[x] = true;
 
     for(int next_node : adj_list[x]){
         if(being_explored[next_node]) return true;
         if(!visited[next_node] && hasCycle(next_node)) return true;
     }
+    visited[x] = true;
     being_explored[x] = false;
     return false;
 }
@@ -35,7 +35,7 @@ int main(){
     add_edge(0,1);
     add_edge(0,2);
     add_edge(2,3);
-    add_edge(3,4);
+    // add_edge(3,4);
     add_edge(4,2);
 
     for(int i = 0; i < n; i++){
