@@ -53,7 +53,7 @@ class binaryTree{
             if(level_end == node){
                 levels.push_back(level);
                 level.clear();
-                level_end = q.back();
+                if(q.size()) level_end = q.back();
             }
         }
         return levels;
