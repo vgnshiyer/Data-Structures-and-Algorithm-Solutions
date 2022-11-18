@@ -120,6 +120,48 @@ class binaryTree{
             }
         }
 
+        // print levels
+        void printLevels(Node* root){
+            if(!root) return;
+            queue<Node*> q;
+            q.push(root);
+
+            while(q.size()){
+                int s = q.size();
+                while(s--){
+                    auto node = q.front();
+                    cout << node->data << " ";
+                    
+                    if(s == 0) cout << "\n"; // level end
+
+                    if(node->left) q.push(node->left);
+                    if(node->right) q.push(node->right);
+                }
+            }
+        }
+
+        // print levels - different approach using array
+        void printLevels2(Node* root){
+            if(!root) return;
+            queue<Node*> q;
+            q.push(root);
+            vector<Node*> level;
+            auto end = root;
+            while(q.size()){
+                auto node = q.front();
+                level.push_back(node);
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+
+                if(node == end){
+                    for(auto p : level) cout << p->data << " ";
+                    cout << endl;
+                    end = q.back();
+                    level.clear();
+                }
+            }
+        }
+
         // count number of nodes in a tree
         int countNodes(Node *root){
             return root ? 1 + countNodes(root->left) + countNodes(root->right) : 0;
