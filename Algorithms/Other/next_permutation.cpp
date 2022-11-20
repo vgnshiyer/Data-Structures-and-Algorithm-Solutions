@@ -4,14 +4,14 @@ using namespace std;
     Generation in lexicographic order Algorithm
     The following algorithm generates the next permutation lexicographically after a given permutation. It changes the given permutation in-place.
 
-    * Find the largest index k such that a[k] < a[k + 1]. If no such index exists, the permutation is the last permutation.
-    * Find the largest index l greater than k such that a[k] < a[l].
-    * Swap the value of a[k] with that of a[l].
-    * Reverse the sequence from a[k + 1] up to and including the final element a[n].    
+    * Find the largest index i such that a[i] < a[i + 1]. If no such index exists, the permutation is the last permutation.
+    * Find the largest index k greater than i such that a[i] < a[k].
+    * Swap the value of a[i] with that of a[k].
+    * Reverse the sequence from a[i + 1] up to and including the final element a[n].    
 */
-void nextPermutation(vector<int>& nums) {
+bool nextPermutation(vector<int>& nums) {
     int i = nums.size()-1;
-    if(i == 0) return;
+    if(i == 0) return false;
     while(true){
         int j = i;
         i--;
@@ -22,11 +22,11 @@ void nextPermutation(vector<int>& nums) {
             while(nums[i] >= nums[k]) k--;
             swap(nums[i], nums[k]);
             reverse(nums.begin()+j, nums.end());
-            break;
+            return true;
         }
         if(i == 0){
             reverse(nums.begin(), nums.end());
-            break;
+            return false;
         }
     }
 }
