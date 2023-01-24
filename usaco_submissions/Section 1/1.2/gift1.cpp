@@ -23,7 +23,7 @@ void solve(){
 		accounts[i] = name;
 	}
 	
-	  string giver;
+	string giver;
 	for(int i = 0; i < n; i++){
 	  cin >> giver;
 		int amount, receivers;
