@@ -712,3 +712,22 @@ Before: arr = [1, 2, 3]
 After: arr = [4, 2, 3]
 ```
 This demonstrates the difference between pass by value and pass by reference. The value of x remains unchanged after calling changeValue, while the value of arr is changed after calling changeReference
+
+Design patterns:
+
+1.  Singleton Pattern: This pattern ensures that a class has only one instance, and provides a global point of access to that instance. For example:
+```
+public class Singleton {
+    private static Singleton instance;
+
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+

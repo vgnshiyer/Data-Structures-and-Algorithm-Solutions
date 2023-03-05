@@ -6,4 +6,4 @@ services:
     volumes:
       - ./main:/main
     command: >
-      sh -c "sleep 10000000"
+      sh -c "tail -f /dev/null"

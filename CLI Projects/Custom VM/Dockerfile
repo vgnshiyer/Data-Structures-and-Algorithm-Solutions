@@ -1,3 +1,5 @@
-FROM eclipse-temurin:17-jdk-jammy
+FROM python:latest
+
+RUN pip install taiga-stats
 
 WORKDIR /main
