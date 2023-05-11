@@ -10,6 +10,10 @@ void add_edge(int x, int y){
     adj_list[y].push_back(x);
 }
 
+void reset(){
+    for(auto &x : visited) x = false;
+}
+
 void DFS(int x){
     visited[x] = true;
     cout << x << " ";
@@ -32,7 +36,9 @@ int main(){
     add_edge(4,5);
     add_edge(4,6);
     DFS(2); // 2 0 1 3 
+    cout << endl;
 
+    reset();
     // printing total number of connected components
     int ans = 0;
     for(int i = 0; i < n; i++){

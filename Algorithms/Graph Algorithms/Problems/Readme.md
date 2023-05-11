@@ -3,23 +3,26 @@
 ##### Detecting a cycle in an unidirected graph
 
 given an undirected graph like shown, we need to return whether there is a cycle present in the graph.
+```
         0
        / \
       1   2        cycle here is 2->3->4->2 ... 
          / \
         3---4
+```
 
 Analysis: O(V+E)
 - We maintain one visited array tracks whether the node was visited or not.
 - We maintain one parent variable which tracks the node where we came from to a node arrived.
 - We explore the current unexplored node.
-  |-> if neighbour is visited, and is equal to the parent, we skip it.
-  |-> if neighbour is unvisited, we call a dfs on that node
-  |-> if node is visited, but is not the parent, We have entered a cycle.
+  - if neighbour is visited, and is equal to the parent, we skip it.
+  - if neighbour is unvisited, we call a dfs on that node
+  - if node is visited, but is not the parent, We have entered a cycle.
 
 ##### Detecting a cycle in a directed graph
 
 given an directed graph like below, return whether there is a cycle present in the graph.
+```
                            +---------------+
         0                  |adjacency list:|
        / \                 | 0->1,2        |
@@ -28,6 +31,7 @@ given an directed graph like below, return whether there is a cycle present in t
         3---4              | 4->2          | 
                            +---------------+ 
                     cycle here is 2->3->4->2 ... 
+```
 Analysis:
 - Here we cannot use the previous algorithm to detect cycle in an unidirected graph.
 - We maintain two arrays, one for visited, and one for the being_explored(rec stack) nodes.
@@ -55,11 +59,13 @@ The TOP SORT Algorithm:-
 Given a list of cities, and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once ans returns to the origin city?
 
 In other words: Given a complete graph(every node connected to every other node) with weighted edges, what is the Hamiltonian cycle (path that visits every node exactly once) of the minimum cost?
+```
      A  B  C  D
  A [[0, 4, 1, 9],                A---B
  B  [3, 0, 6, 11],    ->         |\ /|
  C  [4, 1, 0, 2],                |/ \|
  D  [6, 5, -4, 0]]               C---D
+```
 
 Finding the optimal solution for the TSP problem is very hard: in fact, the problem is known to be NP-complete.
 
