@@ -1,3 +1,5 @@
+## 1.4 palindromic permutation
+
 def palindromicPermutation(word) -> bool:
     bit_vector = getBitVector(word)
     return bit_vector == 0 or exactlyOneBitSet(bit_vector)

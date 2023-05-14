@@ -1,15 +1,21 @@
+## 1.1 is Unique
+
 def getIndex(letter) -> int:
     return ord(letter) - 26;
+
+def getMask(index):
+    return (1 << index)
 
 def isUnique(word) -> bool:
     if(len(word) > 26): return False
 
-    mask = 0
+    bit_vector = 0
     for letter in word:
         index = getIndex(letter)
-        if(mask & (1 << index)):
+        mask = getMask(index)
+        if(bit_vector & mask):
             return False
-        mask |= (1 << index)
+        bit_vector |= mask
     return True
 
 if __name__ == '__main__':

@@ -1,3 +1,5 @@
+## 1.2 check permutation
+
 def getIndex(letter) -> int:
     return ord(letter) - 26
 
