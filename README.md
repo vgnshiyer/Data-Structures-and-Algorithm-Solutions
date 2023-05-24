@@ -17,18 +17,16 @@ Here's how you can get involved:
 
 ## Contributing Guidelines
 
-Solutions from these languages are expected:
-
-* Python
-* C++
-* Java
-* Javascript
-
 - Have clear and meaningful filenames. (eg. `CoinChange.py`)
 - Give you PR an accurate title. (eg. _"Add: Coin change problem"_)
 - One solution per PR.
 - Write clean industry standard code. (Meaningful variable names and function names, easy to understand)
 - Thoroughly test your code. (eg. Make sure it passes all test cases on leetcode.)
+- Solutions from these languages are expected:
+    * Python
+    * C++
+    * Java
+    * Javascript
 
 This collaborative environment will foster growth and help us improve our problem-solving abilities. 
 
