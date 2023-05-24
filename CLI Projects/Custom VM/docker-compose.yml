@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  app:
-    build: .
-    volumes:
-      - ./main:/main
-    command: >
-      sh -c "tail -f /dev/null"
