@@ -1,4 +1,4 @@
-## sort stack, 2.4 is same as this.. just make the push function costlier and other methods in O(1) time
+## sort stack, 3.4 is same as this.. just make the push function costlier and other methods in O(1) time
 
 class Stack:
     stack = []
