@@ -16,6 +16,11 @@ int collapsive_find(int a){
         parent[a] = parent[parent[a]]; // collapsive find operation
         a = parent[a];
     }
+    // recursive
+    // if(parent[a] != a){
+    //     parent[a] = collapsive_find(parent[a]);
+    //     a = parent[a];
+    // }
     return a;
 }
 
