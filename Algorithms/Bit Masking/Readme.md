@@ -11,10 +11,12 @@ There are three logical operations used normally:
 
 Below is an example of masking a certain subset of a binary number.
 
+```
 value : 01010101b
 mask :  00001111b &
 ____________________
         00000101b
+```
 mask first four bits and extract the rest.
 
 ##### In the example subsequences.cpp, you will find the application of using bitmasking to a common problem of finding the number of subsequences of a given string.
@@ -29,7 +31,7 @@ as we can see, given a string of length 'n', there can be total 2^n-1 subsequenc
 Therefore we can have a mask of length 3 which loops from 0 to 2^n-1.
 In this case, it would loop from 0 to 7(inclusive).
 For every bit that is set, we include the corresponding character, and ignore the characters for which the corresponding bits are unset.
-
+```
 eg. 
         ABC
         000 = _
@@ -40,5 +42,5 @@ eg.
         101 = AC
         110 = AB
         111 = ABC
-
+```
 Checkout the cpp file for the program in detail.
