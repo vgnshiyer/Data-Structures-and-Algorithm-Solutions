@@ -57,12 +57,12 @@ int main(){
 
 The Adjacency list is the other most used form of representations of graphs. The size of the list is equal to the number of nodes in the graph. Every node is allocated its own list to represent a path from the node to the nodes it is connected to (adjacent nodes).
 For eg.
-
+```
 0 -> 1 -> 3
 1 -> 0 -> 3 -> 2
 2 -> 1 -> 3
 3 -> 1 -> 2 -> 0
-
+```
 **Pros**
 1. Saves a lot of space. O(V + E)
 2. Adding a vertex is easier.
