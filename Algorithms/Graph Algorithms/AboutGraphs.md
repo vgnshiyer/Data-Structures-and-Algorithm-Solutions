@@ -20,14 +20,14 @@ The choice of either of them depends on a mutitude of factors and the pros and c
 In order to represent a graph in the form of a matrix, we allocate a space of N x N 2D array,
 where N is the number of nodes in the graph. 
 for eg. 
-
+```
    0 1 2 3 4
 0| 0 1 0 1 0
 1| 1 0 1 0 1 
 2| 0 1 0 0 1
 3| 1 0 0 0 0
 4| 0 1 1 0 0
-
+```
 A 1 represents an undirected edge.
 
 **Pros**
