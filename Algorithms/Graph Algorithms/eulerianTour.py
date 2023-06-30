@@ -64,9 +64,6 @@ class EulerianTour:
         path.append(node)
 
     def getEulerianPath(self) -> str:
-        ## check graph validity for eulerian tour
-        if not self.isValidGraph(): return 'The given graph does not have a eulerian tour'
-
         ## find the eulerian path
         path = []
         self.dfs(self.getStartNode(), path)
