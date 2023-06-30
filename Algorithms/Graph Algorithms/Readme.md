@@ -66,6 +66,10 @@ Another Greedy algorithm which works on the same principle of selecting the leas
 
 In order to implement Kruskal's Algorithm, we use the concept of Disjoint Set Union. Here, the nodes belonging to the edges that are added to the MST are considered to be part of a Disjoint Set. Once an edge is added, we check whether the nodes belong to the same subset or not, using the Find operation. If not, we simple unite the two subsets using the Union Operation. If they do, the edge forms a cycle. 
 
+Use Prim's algorithm when the graph is a dense graph. Use Kruskal's algorithm when the graph is sparse.
+Kruskal's algorithm runs with a time complexity of O(ElogE) {sorting the edges} where E is the number of edges in the graph.
+Prim's algorithm runs with a time complexity of O(ElogV), or even better O(E + VlogV) using a fibonacci heap.
+
 ### The Dichotomies between MSTs and Shortest path Algos
 
 ***Shortest Paths*** Here, you are only concerned about the path to travel between two nodes. You optimize this path in such a way that the total cost to travel from it is minimized. 
