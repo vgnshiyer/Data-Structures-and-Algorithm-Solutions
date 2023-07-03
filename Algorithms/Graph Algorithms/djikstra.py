@@ -19,3 +19,20 @@ def djikstra(edges, N, K):
         else:
             d[node] = min(d[node], cost)
     return d
+
+## normal implementation (more intuitive)
+def djikstra(edges, N, K):
+    q, d, adj, visited = [(0, K)], [10**8 for i in range(N+1)], collections.defaultdict(list), set()
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    d[K] = 0
+    while q:
+        cost, node = heapq.heappop(q)
+        visited.add(node)
+
+        for v, w in adj[node]:
+            if v in visited: continue
+            if w + cost < d[v]:
+                d[v] = w + cost
+                heapq.heappush(q, (d[v], v))
+    return d
