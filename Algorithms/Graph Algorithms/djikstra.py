@@ -16,8 +16,6 @@ def djikstra(edges, N, K):
             d[node] = cost
             for v, w in adj[node]:
                 heapq.heappush(q, (cost + w, v))
-        else:
-            d[node] = min(d[node], cost)
     return d
 
 ## normal implementation (more intuitive)
