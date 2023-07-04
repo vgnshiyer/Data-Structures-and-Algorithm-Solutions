@@ -36,13 +36,13 @@ int getLIS_iterative(vector<int> a, int n){
     dp2[0] = 1;
     int max_val = 1;
     for(int i = 1; i < n; i++){
-        dp2[i] = 1;
+        dp2[i] = 1; // start a new subsequence here
         for(int j = 0; j < i; j++){
             if(a[i] > a[j]){
-                dp2[i] = max(dp2[i], dp2[j]+1);
+                dp2[i] = max(dp2[i], dp2[j]+1); // add best of previous subsequences (if increasing)
             }
         }
-        max_val = max(max_val, dp2[i]);
+        max_val = max(max_val, dp2[i]); // log max subseq
     }
     return max_val;
 }

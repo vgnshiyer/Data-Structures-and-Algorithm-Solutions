@@ -13,7 +13,8 @@ Consider a problem of finding a subarray with maximum sum
        |-ans-|
 
 Basic idea to use in kadane's algo is:
-local_maximum at index i is the maximum of A[i] and the sum of A[i] and local_maximum at index i-1.
+local_maximum at index i is the maximum of A[i] and the sum of A[i] and local_maximum at index i-1
+{Notice that we can never ignore an element from the state. We either include the current element in the previous subarray, or start a new subarray}
 
 local_maximum at index i tells us the maximum sum we can get by adding the current bit in the subarray
 */

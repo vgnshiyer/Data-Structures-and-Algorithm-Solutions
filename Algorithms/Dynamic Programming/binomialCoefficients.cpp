@@ -6,23 +6,23 @@ vector<vector<int>> dp(1000, vector<int>(1000, -1));
 int binomialCoeff(int i, int j){
     if(i < 0 || j < 0) return 0;
     if(i == 0 || i == j) return 1;
-    int &ans = dp[i][j];
 
-    if(ans != -1) return ans;
-
-    return ans = binomialCoeff(i-1, j-1) + binomialCoeff(i-1, j);
+    if(dp[i][j] == -1) dp[i][j] = binomialCoeff(i-1,j-1) + binomialCoeff(i-1,j);
+    return dp[i][j];
 }
 
 int binomialCoeff_bottom_up(int n, int k){
     vector<vector<int>> dp2(1000, vector<int>(1000, 0));
     
+    // At every iteration for `i`, we calculate choose(i, 0) to choose(i, i)
     dp2[0][0] = 1;
     for(int i = 1; i <= n; i++){
-        for(int j = 1; j <= i; j++){
-            dp2[i][j] = dp[i-1][j-1] + dp[i-1][j];
+        for(int j = 0; j <= i; j++){
+            dp2[i][j] = dp2[i-1][j];
+            if(j) dp2[i][j] += dp2[i-1][j-1];
         }
     }
-    return dp[n][k];
+    return dp2[n][k];
 }
 
 int main(){
