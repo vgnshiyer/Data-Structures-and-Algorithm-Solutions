@@ -4,4 +4,9 @@ Contribute problems that appeared during online assessments, technical interview
 
 **File Storage Format**
 
-`CompanyName/ProblemName.<extension>`
+`CompanyName/JobTitle/ProblemName.<extension>`
+
+**Instructions:**
+
+1. Please add the entire question of the problem from your assessment/interview
+2. Please add a meaningful description of your solution in the comments inside your program

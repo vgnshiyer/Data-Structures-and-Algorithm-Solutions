@@ -1,0 +1,80 @@
+# You are working in a team where you follow a review process, and you have been asked to review the prepared deployment.
+# There are nine bugs; try to find all of them.
+# You should just change or remove things based on what is already created. Do not rewrite the template completely. Things like volume names etc. should stay, as they are in the initial template.
+# Here is the original task description:
+# Create a Deployment named some-deployment to serve some static files.
+# • Deployment should be labeled with two labels: app equal to some-app and role equal to backend.
+# • Application files are stored in the cluster as PersistentVolumeClaim Using my-storage-class StorageClass and ReadWriteOnce mode. PVC name is some-claim.
+# • The PVC should be attached to the application container as a volume named www and mounted to /usr /share/nginx/html.
+# • Use official nginx docker image, version 1.17.8-alpine.
+# • Expose the default http port and name it http.
+# • Create liveness and readiness probes for this port to paths /healthy (liveness) and /ready (readiness. Probes should timeout after 5 seconds, be executed every 19 seconds and fail after 6 tries. The readiness probe should wait 15 seconds and the liveness probe should wait 10 seconds before first execution.
+# • The application container should have the APPLICATION_NAME environment variable set to some-app.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: some-deployment
+  labels:
+    app: some-app
+    role: backend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: some-app
+      role: backend  # Corrected label 'backnd' to 'backend'
+  template:
+    metadata:
+      labels:
+        app: some-app  # Corrected label 'app' to 'some-app'
+        role: backend
+    spec:
+      volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+      containers:
+        - name: some-app
+          image: nginx:1.17.8-alpine  # Corrected image name from 'stable/nginx:1.17.8-alpine' to 'nginx:1.17.8-alpine'
+          env:
+            - name: APPLICATION_NAME  # Corrected env var syntax by adding '=' after 'name'
+              value: "some-app"
+          ports:
+            - containerPort: 80
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: http  # Corrected 'https' to 'http'
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http  # Corrected 'https' to 'http'
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 5m
+              memory: 10Mi
+  volumeClaimTemplates:
+    - metadata:
+        name: www
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: my-storage-class
+        resources:
+          requests:
+            storage: 1Gi
+
+## Two errors were unfound
