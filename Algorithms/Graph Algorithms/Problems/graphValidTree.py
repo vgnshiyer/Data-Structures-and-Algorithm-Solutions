@@ -18,7 +18,7 @@ class DSU:
         return self.parent[x]
 
     def union(self, x, y):
-        px, py = self.parent[x], self.parent[y]
+        px, py = self.find(x), self.find(y)
         if self.rank[px] > self.rank[py]:
             self.parent[y] = px
         elif self.rank[py] > self.rank[px]:
