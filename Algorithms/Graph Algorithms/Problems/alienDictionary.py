@@ -21,7 +21,6 @@ def findLetterOrder(words):
     letterOrder = []
 
     def topSort(letter, visited, beingVisited):
-        visited.add(letter)
         beingVisited.add(letter)
 
         for nextLetter in adj[letter]:
@@ -30,6 +29,7 @@ def findLetterOrder(words):
             topSort(nextLetter, visited, beingVisited)
         
         beingVisited.remove(letter)
+        visited.add(letter)
         letterOrder.append(letter)
 
     visited = set()
