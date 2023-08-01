@@ -57,7 +57,7 @@ class EulerianTour:
             if abs(inDeg - outDeg) == 1: return node
         return list(self.adj.keys())[0]
 
-    def dfs(self, node, path, ):
+    def dfs(self, node, path):
         while len(self.adj[node]):
             nextNode = self.adj[node].pop()
             self.dfs(nextNode, path)
