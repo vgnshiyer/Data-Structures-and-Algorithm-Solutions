@@ -398,9 +398,9 @@ Encapsulation is a fundamental principle of object-oriented programming that ref
 
 The main goal of encapsulation is to create a well-defined interface between the internal workings of a class and the external code that uses it. This provides a number of benefits, including:
 
-Improved maintainability: Since the implementation details of a class are hidden from external code, it can be changed without affecting the rest of the program.
-Increased reliability: By controlling access to the data, encapsulation can help prevent bugs and errors caused by external code modifying the data in unexpected ways.
-Improved security: Encapsulation can help prevent unauthorized access to sensitive data by limiting access to only the methods provided by the class.
+- Improved maintainability: Since the implementation details of a class are hidden from external code, it can be changed without affecting the rest of the program.
+- Increased reliability: By controlling access to the data, encapsulation can help prevent bugs and errors caused by external code modifying the data in unexpected ways.
+- Improved security: Encapsulation can help prevent unauthorized access to sensitive data by limiting access to only the methods provided by the class.
 Here's an example of encapsulation in Java:
 ```
 public class BankAccount {
@@ -591,7 +591,7 @@ public class StaticExample {
     }
 }
 ```
-In this example, we have a MathUtils class with a PI constant declared as a static final variable and a calculateArea() method declared as a static method. In the main() method of the StaticExample class, we call the calculateArea() method with a radius of 2.0 and print the result. We also print the value of the PI constant by accessing it using the MathUtils class name and the . operator. Since both PI and calculateArea() are declared as static, we can access them without creating an instance of the MathUtils class.
+In this example, we have a MathUtils class with a PI constant declared as a static final variable and a calculateArea() method declared as a static method. In the main() method of the StaticExample class, we call the calculateArea() method with a radius of 2.0 and print the result. We also print the value of the PI constant by accessing it using the MathUtils class name and the dot operator. Since both PI and calculateArea() are declared as static, we can access them without creating an instance of the MathUtils class.
 
 **Why multiple inheritence is not good?**
 Multiple inheritance is the ability of a programming language to allow a class to inherit properties and behavior from multiple parent classes. While it can be a powerful feature, it also comes with some potential drawbacks that can make it difficult to use effectively.
@@ -716,8 +716,7 @@ This demonstrates the difference between pass by value and pass by reference. Th
 Design patterns:
 
 1.  Singleton Pattern: This pattern ensures that a class has only one instance, and provides a global point of access to that instance. For example:
-```
-public class Singleton {
+```public class Singleton {
     private static Singleton instance;
 
     private Singleton() {}
@@ -730,4 +729,167 @@ public class Singleton {
     }
 }
 ```
+You may have a resource, such as a database connection or a file, that you want to share across your application. By using a Singleton, you can ensure that there is only one instance of the object that represents that resource, and all requests for that resource are handled by that single instance. 
+- have a private constructor for a singleton -> no one from outside can construct the instance
+- have static method to create a singleton
+
+2.  Factory Method Pattern: The Factory Method pattern is used when we want to create objects without exposing the instantiation logic to the client. This means that instead of calling the constructor of a class directly, the client calls a factory method that creates an instance of the class for them.
+```
+public interface Animal {
+    void makeSound();
+}
+
+public class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Bark");
+    }
+}
+
+public class Cat implements Animal {
+    public void makeSound() {
+        System.out.println("Meow");
+    }
+}
+
+public class AnimalFactory {
+    public Animal createAnimal(String type) {
+        if (type.equals("dog")) {
+            return new Dog();
+        } else if (type.equals("cat")) {
+            return new Cat();
+        } else {
+            throw new IllegalArgumentException("Invalid animal type: " + type);
+        }
+    }
+}
+```
+Here we are creating the dog and cat object for the client based on the input `type` they enter, yet we are not revealing exactly how we are creating the object.
+
+3.  Observer Pattern: This pattern defines a one-to-many dependency between objects, so that when one object changes state, all its dependents are notified and updated automatically. For example:
+```
+public interface Observer {
+    void update(int value);
+}
+
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
+
+public class ConcreteSubject implements Subject {
+    private List<Observer> observers = new ArrayList<>();
+    private int value;
+
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+        notifyObservers();
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(value);
+        }
+    }
+}
+
+public class ConcreteObserver implements Observer {
+    private int value;
+
+    public void update(int value) {
+        this.value = value;
+        System.out.println("Value changed to: " + value);
+    }
+}
+```
+
+4. Dependency Injection pattern: Dependency Injection (DI) is a design pattern that facilitates the creation of loosely coupled and highly cohesive code. The idea behind DI is to allow objects to obtain their dependencies from external sources, rather than creating those dependencies themselves. In simple terms, DI is a pattern that allows you to inject an object or a dependency into a class rather than having the class create or retrieve the dependency itself. This allows for greater flexibility and testability in your code.
+```
+1.  Constructor Injection: This is the most common form of DI, where dependencies are provided as parameters to a class constructor. For example:
+public class Car {
+   private final Engine engine;
+   public Car(Engine engine) {
+      this.engine = engine;
+   }
+}
+2.  Setter Injection: This involves setting the dependencies via setter methods. For example:
+public class Car {
+   private Engine engine;
+   public void setEngine(Engine engine) {
+      this.engine = engine;
+   }
+}
+```
+
+5. Command pattern: The Command pattern is a behavioral design pattern that allows you to encapsulate a request as an object, thereby allowing you to parameterize clients. Command pattern is to decouple the requester of an action from the object that actually performs the action.
+```
+public interface Command {
+    void execute();
+}
+
+public class LightOnCommand implements Command {
+    private Light light;
+    
+    public LightOnCommand(Light light) {
+        this.light = light;
+    }
+    
+    public void execute() {
+        light.turnOn();
+    }
+}
+
+public class LightOffCommand implements Command {
+    private Light light;
+    
+    public LightOffCommand(Light light) {
+        this.light = light;
+    }
+    
+    public void execute() {
+        light.turnOff();
+    }
+}
+
+public class RemoteControl {
+    private Command command;
+    
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+    
+    public void pressButton() {
+        command.execute();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Light light = new Light();
+        Command lightOnCommand = new LightOnCommand(light);
+        Command lightOffCommand = new LightOffCommand(light);
+        
+        RemoteControl remote = new RemoteControl();
+        remote.setCommand(lightOnCommand);
+        remote.pressButton();
+        
+        remote.setCommand(lightOffCommand);
+        remote.pressButton();
+    }
+}
+```
+
+6. Adapter patter: The Adapter pattern is a structural design pattern that allows objects with incompatible interfaces to work together. It is often used when you need to adapt an existing class to work with a new interface or when you need to use a class that doesn't quite fit with your existing code.
+The Adapter pattern involves three main components:
+1.  The Client: The client is the code that is using the objects that need to be adapted.
+2.  The Target: The target is the interface that the client is expecting to work with.
+3.  The Adapter: The adapter is the code that adapts the existing object to work with the target interface.
 
