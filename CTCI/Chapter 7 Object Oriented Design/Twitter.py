@@ -41,7 +41,7 @@ class Twitter:
         user.addTweet((-self.timestamp, tweetId))
         self.timestamp += 1
 
-    def getNewsFeed(self, userId: int) -> List[int]:
+    def getNewsFeed(self, userId: int) -> list[int]:
         if userId in self.users:
             user = self.users[userId]
             followees = user.getFollowees()

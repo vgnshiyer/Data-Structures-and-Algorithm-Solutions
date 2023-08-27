@@ -54,8 +54,8 @@ class Hand:
         return score
 
     def add(self, card: Card):
-        self.score()
         self.cards.append(card)
+        self.score()
 
     def is21(self) -> bool:
         return self.handScore == 21
@@ -83,6 +83,8 @@ class Deck:
         random.shuffle(self.__deck)
 
     def deal(self) -> Card:
+        if self.k >= 52: 
+            raise Exception('Out of cards. Deck is empty!!')
         card = self.__deck[self.k]
         self.k += 1
         return card 
@@ -100,7 +102,7 @@ if __name__ == '__main__':
         print('Current score: {0}'.format(hand.score()))
         hand.add(deck.deal())
 
-    if hand.score() == 21:
+    if hand.is21():
         print('Blackjack!!')
     else:
         print('Current score: {0}'.format(hand.score()))
