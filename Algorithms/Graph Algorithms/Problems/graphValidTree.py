@@ -17,14 +17,15 @@ class DSU:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
 
+    ## assign parent[py] to px instead of parent[y] to px. This can create discrepancy for certain test cases. It is better to change at the parent level than the child level.
     def union(self, x, y):
         px, py = self.find(x), self.find(y)
         if self.rank[px] > self.rank[py]:
-            self.parent[y] = px
+            self.parent[py] = px
         elif self.rank[py] > self.rank[px]:
-            self.parent[x] = py
+            self.parent[px] = py
         else:
-            self.parent[y] = px
+            self.parent[py] = px
             self.rank[px] += 1
 
 def graphValidTree(inp, n):
