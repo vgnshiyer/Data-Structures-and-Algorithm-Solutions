@@ -41,6 +41,14 @@ def canPartition_iterative_space_optimized(nums):
             if j >= nums[i - 1]:
                 dp[j] |= dp[j - nums[i - 1]]
 
+    '''
+    Above can also be written as:
+    for i in range(1, n + 1):
+        dp_copy = dp.copy()
+        for j in range(nums[i-1], total + 1):
+            dp[j] |= dp_copy[j - nums[i-1]]
+    '''
+
     return bool(dp[total])
 
 def canPartition_recursive(nums):
