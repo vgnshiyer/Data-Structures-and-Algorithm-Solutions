@@ -11,12 +11,12 @@ def minTaps(n: int, ranges: List[int]) -> int:
 
     INF = 10**9
 
-    dp = [INF] * (n + 1)
+    dp = [INF] * (n)
     dp[0] = 0
 
     for i in range(n + 1):
         tap_start = max(0, i - ranges[i])
         tap_end = min(n, i + ranges[i])
         for j in range(tap_start, tap_end + 1):
-            dp[tap_end] = min(dp[tap_end], dp[j] + 1)
+            dp[j] = min(dp[j], dp[tap_start] + 1)
     return -1 if dp[-1] == INF else dp[-1]
