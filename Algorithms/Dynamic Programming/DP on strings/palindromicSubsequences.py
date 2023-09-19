@@ -1,3 +1,18 @@
+'''
+state: dp[i][j] -> number of palindromic subsequences between i and j
+transition: dp[i][j] = dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1] {if s[i] != s[j]}
+		else
+				## Case 1: a__a no similar chars in between
+				dp[i][j] = 2 * dp[i + 1][j - 1] + 2 {c, cc, xx} + {aca, acca, axxa, ..} + {aa} + {a}
+												
+				## Case 2: a__a__a 1 similar char in between
+				dp[i][j] = 2 * dp[i + 1][j - 1] + 1 {cac, a, ...} + {acaca, aaa, ...} + {aa}
+												
+				## Case 3: a__a_a__a 2 similar chars in between
+				dp[i][j] = 2 * dp[i + 1][j - 1] - dp[l + 1][r - 1] {aca, aa, c, cc...} + {aacaa, aaaa, aca, acca} - {aca}
+base case: dp[i][i] = 1, else 0
+'''
+
 def countPalindromicSubsequences(self, s: str) -> int:
     n = len(s)
     mod = 10 ** 9 + 7
