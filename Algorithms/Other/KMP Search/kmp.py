@@ -6,39 +6,24 @@ class KMPSearch:
     def _compute_lps(self):
         m = len(self.pattern)
         lps = [0] * m
-        i, j = 0, 1
+        j = 0
 
-        while j < m:
+        for i in range(1, m):
+            while j > 0 and self.pattern[i] != self.pattern[j]: j = lps[j - 1]
             if self.pattern[i] == self.pattern[j]:
-                lps[j] = i + 1
-                i += 1
                 j += 1
-            else:
-                if i == 0:
-                    lps[j] = 0
-                    j += 1
-                else:
-                    i = lps[i - 1]
-        return lps
+                lps[i] = j
 
     def search(self, text):
         n = len(text)
         m = len(self.pattern)
         i = j = 0
 
-        while i < n:
-            if text[i] == self.pattern[j]:
-                i += 1
-                j += 1
-            else:
-                if j == 0:
-                    i += 1
-                else:
-                    j = self.lps[j - 1]
-
-            if j == m:
-                return i - m  # Pattern found at index i - m
-        return -1  # Pattern not found
+        for i in range(n):
+            while j > 0 and self.text[i] != self.pattern[j]: j = self.lps[j - 1]
+            if self.text[i] == self.pattern[j]: j += 1
+            if j == m: return i - m # pattern found
+        return -1
 
 if __name__ == '__main__':
     s = 'abcdeabcdf'
