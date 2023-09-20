@@ -47,3 +47,36 @@ def findLength_iterative_spaceOptimized(nums1, nums2):
             ans = max(ans, dp2[j])
         dp = dp2
     return ans
+
+## solution using Knuth-Morris-Patt search
+def findLength_kmp(nums1: List[int], nums2: List[int]) -> int:
+    n, m = len(nums1), len(nums2)
+    
+    def computeLps(nums) -> list:
+        m = len(nums)
+        j = 0
+        lps = [0] * m
+
+        for i in range(1, m):
+            while j > 0 and nums[i] != nums[j]: j = lps[j - 1]
+            if nums[i] == nums[j]: 
+                j += 1
+                lps[i] = j
+        return lps
+
+    '''
+    Notice that we are checking the pattern from every possible index. 
+    from 0 - n-1, 1 - n-1, 2 - n-1, ... and so on.
+    We take record of the maximum common prefix at every step.
+    '''
+    ans = 0
+    while len(nums2):
+        lps = computeLps(nums2)
+        j = 0
+        for i in range(n):
+            while j > 0 and nums1[i] != nums2[j]: j = lps[j - 1]
+            if nums1[i] == nums2[j]: j += 1
+            ans = max(ans, j)
+            if j == len(nums2): break
+        del[nums2[0]]
+    return ans
