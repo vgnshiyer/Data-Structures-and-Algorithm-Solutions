@@ -13,6 +13,7 @@ class KMPSearch:
             if self.pattern[i] == self.pattern[j]:
                 j += 1
                 lps[i] = j
+        return lps
 
     def search(self, text):
         n = len(text)
@@ -20,8 +21,8 @@ class KMPSearch:
         i = j = 0
 
         for i in range(n):
-            while j > 0 and self.text[i] != self.pattern[j]: j = self.lps[j - 1]
-            if self.text[i] == self.pattern[j]: j += 1
+            while j > 0 and text[i] != self.pattern[j]: j = self.lps[j - 1]
+            if text[i] == self.pattern[j]: j += 1
             if j == m: return i - m # pattern found
         return -1
 
