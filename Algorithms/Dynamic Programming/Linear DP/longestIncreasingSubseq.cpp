@@ -47,6 +47,22 @@ int getLIS_iterative(vector<int> a, int n){
     return max_val;
 }
 
+/**
+ * Solution using Binary Search
+ * https://leetcode.com/problems/longest-increasing-subsequence/solutions/1326552/optimization-from-brute-force-to-dynamic-programming-explained/
+*/
+int lengthOfLIS_BS(vector<int>& A) {
+    vector<int> lis;
+
+    for (int x : A) {
+        auto it = lower_bound(lis.begin(), lis.end(), x);
+        if (it == lis.end()) lis.push_back(x);
+        else *it = x;
+    }
+
+    return lis.size();
+}
+
 int main(){
     cout << "recursive: " << getLIS_recursive({ 3, 2, 6, 4, 5, 1 }, 6, 0, 0) << endl; // 3
     cout << "iterative: " << getLIS_iterative({ 3, 2, 6, 4, 5, 1 }, 6) << endl; // 3
