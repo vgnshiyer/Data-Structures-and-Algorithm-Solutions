@@ -45,7 +45,38 @@ def orderOfLargestPlusSign(n: int, mines: List[List[int]]) -> int:
             best = max(best, 1 + min([u, d, l, r]))
     return best
 
-def orderOfLargestPlusSign_space_optimized(n: int, mines: List[List[int]]) -> int:
+def orderOfLargestPlusSign_space_optmized(self, n: int, mines: List[List[int]]) -> int:
+    dp = [[n] * n for _ in range(n)]
+
+    for x, y in mines: dp[x][y] = 0
+
+    for i in range(n):
+        l = 0
+        for j in range(n):
+            l = l + 1 if dp[i][j] != 0 else 0
+            dp[i][j] = min(dp[i][j], l)
+        
+        r = 0
+        for k in range(n-1, -1, -1):
+            r = r + 1 if dp[i][k] != 0 else 0
+            dp[i][k] = min(dp[i][k], r)
+
+        u = 0
+        for j in range(n):
+            u = u + 1 if dp[j][i] != 0 else 0
+            dp[j][i] = min(dp[j][i], u)
+
+        d = 0
+        for k in range(n-1, -1, -1):
+            d = d + 1 if dp[k][i] != 0 else 0
+            dp[k][i] = min(dp[k][i], d)
+
+    ans = 0
+    for i in range(n):
+        for j in range(n): ans = max(ans, dp[i][j])
+    return ans
+
+def orderOfLargestPlusSign_space_optimized_Concise(n: int, mines: List[List[int]]) -> int:
     dp = [[n] * n for _ in range(n)]
 
     for x, y in mines: dp[x][y] = 0
