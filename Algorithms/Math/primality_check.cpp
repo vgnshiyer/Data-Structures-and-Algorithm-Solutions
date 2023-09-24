@@ -20,6 +20,8 @@ bool is_prime2(int n){
     return true;
 }
 
+typedef long long ll;
+
 bool is_prime3(ll n){
     if(n <= 1) return false;
     if(n <= 3) return true;
