@@ -9,6 +9,16 @@ eg. [1,2,4,7] -> 4 (1,2,4,7)
     therefore ans = 4
 '''
 
+'''
+state: dp[i][0] --> longest subsequence ending at i with even sum of differences
+         dp[i][1] --> longest subsequence ending at i with odd sum of differences
+transition: dp[i][0] = max(dp[i][0], dp[j][0] + 1) if (arr[i] - arr[j]) % 2 == 0
+            dp[i][1] = max(dp[i][1], dp[j][1] + 1) if (arr[i] - arr[j]) % 2 == 0
+            dp[i][0] = max(dp[i][0], dp[j][1] + 1) if (arr[i] - arr[j]) % 2 == 1
+            dp[i][1] = max(dp[i][1], dp[j][0] + 1) if (arr[i] - arr[j]) % 2 == 1
+base case: dp[0][0] = 1
+'''
+
 @lru_cache(None)
 def longestSubseq(i, p, s):
     if i >= len(arr): return 0 if s % 2 == 0 else -float('inf')
