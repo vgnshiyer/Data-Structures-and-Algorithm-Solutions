@@ -1,42 +1,66 @@
-def checkRecord(n: int) -> int:
-    '''
-    we divide the problem into multiple states
-    // state[0] : end with A
-    // state[1] : end with P and 0 A before end;
-    // state[2] : end with P and 1 A before end;
-    // state[3] : end with 1 L and 0 A before end;
-    // state[4] : end with 1 L and 1 A before end;
-    // state[5] : end with 2 L and 0 A before end;
-    // state[6] : end with 2 L and 1 A before end;
+def checkRecord_recursive(n: int) -> int:
+    mod = 10 ** 9 + 7
 
-    transtion:
-    state[0] = state[1] + state[3] + state[5]
-    state[1] = state[1] + state[3] + state[5]
-    state[2] = state[0] + state[2] + state[4] + state[6]
-    state[3] = state[1]
-    state[4] = state[0] + state[2]
-    state[5] = state[3]
-    state[6] = state[4]
+    @cache
+    def checkAttendanceRecord(i, l, a):
+        if i >= n: return 1
+        
+        ans = 0
+        ## present
+        ans += checkAttendanceRecord(i + 1, 0, a)
+        ans %= mod
 
-    base: state = [1(A), 1(P), 0, 1(L), 0, 0, 0] -> number of ways with length = 1
-    '''
+        ## absent
+        if a < 1: ans += checkAttendanceRecord(i + 1, 0, a + 1)
+        ans %= mod
 
-    mod = 10**9 + 7
-    dp = [1, 1, 0, 1, 0, 0, 0]
+        ## late
+        if l < 2: ans += checkAttendanceRecord(i + 1, l + 1, a)
+        ans %= mod
 
-    for i in range(2, n + 1):
-        cur = [0] * 7
-        cur[0] = ((dp[1] + dp[3]) % mod + dp[5]) % mod
-        cur[1] = cur[0]
-        cur[2] = (((dp[0] + dp[2]) % mod + dp[4]) % mod + dp[6]) % mod
-        cur[3] = dp[1]
-        cur[4] = (dp[0] + dp[2]) % mod
-        cur[5] = dp[3]
-        cur[6] = dp[4]
+        return ans % mod
 
-        dp = cur
+    return checkAttendanceRecord(0, 0, 0)
 
-    total_records = 0
-    for r in dp: total_records = (total_records + r) % mod
+def checkRecord_iterative(n: int) -> int:
+    mod = 10 ** 9 + 7
+    dp = [[[0] * 2 for _ in range(3)] for _ in range(n + 1)]
 
-    return total_records
+    dp[n][0][0] = 1  ## ____P
+    dp[n][0][1] = 1  ## _A__P
+    dp[n][1][0] = 1  ## ____L
+    dp[n][2][0] = 1  ## ___LL
+    dp[n][1][1] = 1  ## _A__L
+    dp[n][2][1] = 1  ## _A_LL
+
+    for i in range(n - 1, -1, -1):
+        dp[i][0][0] = (dp[i + 1][0][0] + dp[i + 1][0][1] + dp[i + 1][1][0]) % mod
+        dp[i][0][1] = (dp[i + 1][0][1] + dp[i + 1][1][1]) % mod
+        dp[i][1][0] = (dp[i + 1][0][0] + dp[i + 1][0][1] + dp[i + 1][2][0]) % mod
+        dp[i][2][0] = (dp[i + 1][0][0] + dp[i + 1][0][1]) % mod
+        dp[i][1][1] = (dp[i + 1][0][1] + dp[i + 1][2][1]) % mod
+        dp[i][2][1] = dp[i + 1][0][1] % mod
+
+    return dp[0][0][0] % mod
+
+def checkRecord_spaceOptimized(n: int) -> int:
+    mod = 10 ** 9 + 7
+
+    P = 1  ## ____P
+    AP = 1  ## _A__P
+    L = 1  ## ____L
+    LL = 1  ## ___LL
+    AL = 1  ## _A__L
+    ALL = 1  ## _A_LL
+
+    for i in range(1, n + 1):
+        P_cur = (P + AP + L) % mod
+        AP_cur = (AP + AL) % mod
+        L_cur = (P + AP + LL) % mod
+        LL_cur = (P + AP) % mod
+        AL_cur = (AP + ALL) % mod
+        ALL_cur = AP % mod
+
+        P, AP, L, LL, AL, ALL = P_cur, AP_cur, L_cur, LL_cur, AL_cur, ALL_cur
+
+    return P % mod
