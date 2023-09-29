@@ -38,5 +38,5 @@ def jobScheduling_iterative(startTime: List[int], endTime: List[int], profit: Li
             m = (l + r) >> 1
             if intervals[m][0] < end: l = m + 1
             else: r = m
-        dp[i] = max(dp[i+1], pft + dp[r])
+        dp[i] = max(dp[i+1], pft + dp[r]) ## since we are only checking the closest interal (as opposed to all possible ones like LCS), we are tracking the best value by doing dp[i] = max(dp[i + 1], ...)
     return dp[0]

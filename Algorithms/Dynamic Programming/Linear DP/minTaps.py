@@ -6,7 +6,9 @@ def minTaps(n: int, ranges: List[int]) -> int:
     base case: Since we do not have to open any taps to water a part of zero length, thus dp[0]=0.
 
     transition: for every tap, we get the start and end of the range. For the end of the range we calculate the least amount of taps to open that fills the range 0 to end.
-    therefor for j in start, end, dp[end] = min(dp[end], 1 + dp[j])
+    therefor for j in start, end, dp[j] = min(dp[j], 1 + dp[start])
+
+    For every position j, we try to consider that this part of the garden is not watered thus add 1 to dp[start](which has been watered)
     '''
 
     INF = 10**9
