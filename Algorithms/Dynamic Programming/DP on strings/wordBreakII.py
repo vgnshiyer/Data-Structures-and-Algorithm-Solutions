@@ -31,3 +31,18 @@ def wordBreak_optimized(s: str, wordDict: List[str]) -> List[str]:
         return memo[i]
     
     return dfs(0)
+
+def wordBreak_iterative(s: str, wordDict: List[str]) -> List[str]:
+    wordDict = set(wordDict)
+    dp = [[''] for _ in range(len(s) + 1)]
+
+    for i in range(len(s) - 1, -1, -1):
+        cur_sentence = ''
+        dp[i] = []
+        for j in range(i, len(s)):
+            if s[i : j + 1] not in wordDict: continue
+            cur_sentence = s[i : j + 1]
+            other_possible_sentences = dp[j + 1]
+            for sentence in other_possible_sentences:
+                dp[i].append((cur_sentence + ' ' + sentence).strip())
+    return dp[0]
