@@ -6,6 +6,16 @@ def calculateMinimumHP(dungeon: List[List[int]]) -> int:
 
     Here we are inverting the problem by subtracting the amount of health we gain or lose.
     Any value less than 0 we round it to 1. This is because we can't have negative health.
+
+    Answer to what's the intuition behind populating the DP array backwards ?
+    At every index position dp[i][j] the matrix we ask ourselves, what is the minimum health I need to have right here so that I don't die in the future. The answer to this depends on what lies ahead i.e in the future, not what you have encountered so far. When you reach dp[0][0], you exactly know what you need so that you don't die in the future.
+
+    If the question was, whats the maximum value of the orbs you can collect ? - you can solve this both forwards and backwards using either top down or bottom up approach.
+    The direction you take sometimes depends on the question being asked.
+
+
+    Why this problem is different?
+    Usually in dp you start from the top and work your way towards the bottom. But in this problem the direction matters. Here you need to start from what you know and work towards a position where you don't know. Because this problem demands for you to make a decision based on the future, not from what you know from the past.
     '''
     n, m = len(dungeon), len(dungeon[0])
 
