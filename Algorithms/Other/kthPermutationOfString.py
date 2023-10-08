@@ -6,6 +6,7 @@ Given a string 'abcd', find the kth lexicographical permutation of the string.
 Before jumping in to the solution, we need to understand the factorial number system. Instead of powers of 2/10 as in binary or decimal number system, the factorial number system uses factorials. The digit at the 0th place can take only one value. The digit at ones place can take 2 values and so on. So the digit at the nth place can take n+1 values.
 
 For example, a number 349 in factoradic form is 242010. We progressively divide the number by 1, 2, 3, 4, 5 and so on until we get 0. The remainders are the digits of the number in factoradic form.
+therefore, 349 = 2*5! + 4*4! + 2*3! + 0*2! + 1*1! + 0*0!
 
 There is a direct relationship between permutations of strings and factorial number system.
 While finding the nth lexicographical permutation of a string, if we convert n in to its factoradic form, the digits of the factoradic form will be the indices of the characters of the string in the nth permutation.
