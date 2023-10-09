@@ -11,6 +11,27 @@ int Kadanes(vector<int>& arr) {
     return maxSum;
 }
 
+/* Kadane's algorithm using divide and conquer approach */
+int Kadanes_divide_and_conquer(vector<int>& nums, int l, int r) {
+    if (l > r) {
+        return INT_MIN;
+    }
+    int m = l + (r - l) / 2, ml = 0, mr = 0;
+    int lmax = maxSubArray(nums, l, m - 1); // find left max excluding current element
+    int rmax = maxSubArray(nums, m + 1, r); // find right max excluding current elemetn
+    
+    // find max sum including current element
+    for (int i = m - 1, sum = 0; i >= l; i--) {
+        sum += nums[i];
+        ml = max(sum, ml); // finding best sum towards left
+    }
+    for (int i = m + 1, sum = 0; i <= r; i++) {
+        sum += nums[i];
+        mr = max(sum, mr); // finding best sum towards right
+    }
+    return max(max(lmax, rmax), ml + mr + nums[m]); // return max of left, right or sum including current element
+}
+
 /* 2D Kadane's algorithm */
 int maximalRectangleSum(vector<vector<int>> &matrix) {
     int n = matrix.size(), m = matrix[0].size();
