@@ -35,3 +35,33 @@ def cherryPickup_recursive(grid: List[List[int]]) -> int:
 
     return max(0, getMaxCherries(0, 0, 0, 0))
 
+'''
+We can reduce the space complexity by making a key observation here.
+Note that r1 + c1 = r2 + c2 for all the cells that are on the same diagonal.
+
+therefore c2 can be expressed as c2 = r1 + c1 - r2.
+Hence space complexity can be O(n ^ 3)
+'''
+
+def cherryPickup(grid: List[List[int]]) -> int:
+    n = len(grid)
+
+    dp = {}
+    def getMaxCherries(r1, c1, r2):
+        c2 = r1 + c1 - r2
+        if r1 == n or c1 == n or r2 == n or c2 == n or grid[r1][c1] == -1 or grid[r2][c2] == -1: return -float('inf')
+        if r1 == n - 1 and c1 == n - 1: return grid[r1][c1]
+
+        if r1 == r2 and c1 == c2: cherries = grid[r1][c1]
+        else: cherries = grid[r1][c1] + grid[r2][c2]
+
+        if (r1, c1, r2) not in dp:
+            dp[(r1, c1, r2)] = cherries + max(
+                getMaxCherries(r1, c1 + 1, r2),
+                getMaxCherries(r1 + 1, c1, r2 + 1),
+                getMaxCherries(r1, c1 + 1, r2 + 1),
+                getMaxCherries(r1 + 1, c1, r2)
+            )
+        return dp[(r1, c1, r2)]
+
+    return max(0, getMaxCherries(0, 0, 0))
