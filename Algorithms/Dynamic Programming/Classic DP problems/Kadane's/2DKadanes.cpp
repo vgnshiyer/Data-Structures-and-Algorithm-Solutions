@@ -17,8 +17,8 @@ int Kadanes_divide_and_conquer(vector<int>& nums, int l, int r) {
         return INT_MIN;
     }
     int m = l + (r - l) / 2, ml = 0, mr = 0;
-    int lmax = maxSubArray(nums, l, m - 1); // find left max excluding current element
-    int rmax = maxSubArray(nums, m + 1, r); // find right max excluding current elemetn
+    int lmax = Kadanes_divide_and_conquer(nums, l, m - 1); // find left max excluding current element
+    int rmax = Kadanes_divide_and_conquer(nums, m + 1, r); // find right max excluding current elemetn
     
     // find max sum including current element
     for (int i = m - 1, sum = 0; i >= l; i--) {
