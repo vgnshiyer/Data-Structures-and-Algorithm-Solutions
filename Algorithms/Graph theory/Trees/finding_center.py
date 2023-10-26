@@ -2,7 +2,9 @@ def treeCenter(adj, n):
     degree = [0] * n
     leaves = []
     for i in range(n): 
-        degree[i] = len(adj[i])
+        for nxt in adj[i]: degree[nxt] += 1
+
+    for i in range(n):
         if degree[i] == 1: leaves.append(i)
 
     count = 0
