@@ -1,9 +1,4 @@
-'''
-class TreeNode():
-    def __init__(self, val, children=[]):
-        pass
-'''
-root = TreeNode(root.val, [])
+import TreeNode
 
 def rootTree(rootId, parent=None):
     for child in neighbors[rootId]:
@@ -14,4 +9,3 @@ def rootTree(rootId, parent=None):
         node.children.append(child)
         rootTree(child)
     return rootId  
-    
