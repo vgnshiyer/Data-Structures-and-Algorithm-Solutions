@@ -34,6 +34,7 @@ graph2 = [[1,2],[2,2],[1,3],[3,1],[3,2],[2,4],[2,4],[4,3],[4,6],[6,3],[3,5],[5,6
 
 class EulerianTour:
     def setGraph(self, graph):
+        self.edges = graph
         self.adj = defaultdict(list)
         self.indegree = defaultdict(int)
         self.outdegree = defaultdict(int)    
@@ -67,6 +68,7 @@ class EulerianTour:
         ## find the eulerian path
         path = []
         self.dfs(self.getStartNode(), path)
+        if len(path) >= len(self.edges) + 1: return [] # invalid graph
         return ' '.join(map(str, path[::-1]))
 
 eu = EulerianTour()
