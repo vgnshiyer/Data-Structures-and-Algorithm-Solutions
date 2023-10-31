@@ -25,3 +25,24 @@ def knightDialer(n: int) -> int:
             num_distinct_phone_numbers = (num_distinct_phone_numbers + dp[i][j][n]) % mod
 
     return num_distinct_phone_numbers
+
+# optimized graph solution
+def knightDialer(n: int) -> int:
+    adj = [[4, 6], [6, 8], [7, 9], [4, 8], [3, 9, 0], [], [1, 7, 0], [2, 6], [1, 3], [4, 2]]
+    mod = 10 ** 9 + 7
+
+    dp = [[0] * (n) for _ in range(10)]
+    for i in range(10): dp[i][0] = 1
+
+    for j in range(1, n):
+        for i in range(10):
+            dp[i][j] = 0
+            for k in adj[i]:
+                dp[i][j] += dp[k][j - 1]
+                dp[i][j] %= mod
+    
+    total = 0
+    for i in range(10): 
+        total += dp[i][n - 1]
+        total %= mod
+    return total
