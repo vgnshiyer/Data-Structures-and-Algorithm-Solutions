@@ -21,7 +21,7 @@ def dfs(i):
         if ids[j] == -1: dfs(j)
         if being_visited[j]: low[i] = min(low[i], low[j]) # in a cycle
         
-    if ids[i] == low[i]: found the start of an scc
+    if ids[i] == low[i]: # found the start of an scc
         node = None
         while node != i:
             node = stack.pop()

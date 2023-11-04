@@ -6,14 +6,14 @@ def TSP_recursive(prev, mask):
     cost = inf
     for i in range(n):
         if mask & (1 << n): continue
-        cost = min(cost, dist[prev][i] + TSP(i, mask | (1 << n))
+        cost = min(cost, dist[prev][i] + TSP(i, mask | (1 << n)))
     dp[(prev, mask)] = cost # memoize 
     return cost
      
 def TSP_iterative():
     dp = [[inf] * (1 << n) for _ in range(n)]
     
-    for i in range(n): dp[i][(1 << i] = 0
+    for i in range(n): dp[i][(1 << i)] = 0
     
     for mask in range(1, 1 << n):
         for i in range(n): # already included
