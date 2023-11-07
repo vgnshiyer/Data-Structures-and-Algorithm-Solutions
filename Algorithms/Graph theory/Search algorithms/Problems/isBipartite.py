@@ -30,13 +30,19 @@ def isBipartite_bfs(adj, n):
     queue = deque()
     queue.append(0)
     
-    while queue:
-        u = queue.popleft()
-        
-        for v in range(n):
-            if u != v:
-                if adj[u][v] and color[v] == -1:
-                    color[v] = 1 - color[u] # give a different color to v
-                elif color[v] == color[u]: return False # graphs of different sets must have different color
+    for i in range(n): ## adding this makes it work even for disconnected graphs
+        if color[i] != -1: 
+            continue
+        color[i] = 0
+        queue.append(i)
+        while queue:
+            u = queue.popleft()
+            
+            for v in range(n):
+                if u != v:
+                    if adj[u][v] and color[v] == -1:
+                        color[v] = 1 - color[u] # give a different color to v
+                        queue.append(v)
+                    elif color[v] == color[u]: return False # graphs of different sets must have different color
                 
     return True  
