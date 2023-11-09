@@ -5,6 +5,8 @@ const int N = 1000;
 int parent[N];
 pair<int, pair<int, int>> edges[N];
 int v, n;
+int edge_count = 0;
+vector<int> size;
 
 void add_edge(int u, int v, int w, int i){
     edges[i] = {w, {u,v}};
@@ -28,9 +30,11 @@ void weighted_union(int a, int b){
     int d = collapsive_find(a);
     int e = collapsive_find(b);
     parent[d] = parent[e]; // merge two subsets
+    size[e] += size[d] // notice that e and d are swapped
+    edge_count++;
 }
 
-int KruskalsMST(){
+int KruskalsMST(int n){
     int a, b;
     int cost, minCst = 0;
     for(int i = 0; i < v; i++){
@@ -40,6 +44,15 @@ int KruskalsMST(){
         if(collapsive_find(a) != collapsive_find(b)){ // check if we are forming a cycle (both nodes belong to same subset)
             minCst += cost;
             weighted_union(a, b);
+        }
+    }
+    
+    cout << "Number of connected components: " << n - edge_count << endl;
+    cout << "Size of each component: " << endl;
+    
+    for(int i = 0; i < n; i++) {
+        if (i == parent[i]) {
+            cout << size[i] << endl;
         }
     }
     return minCst;
@@ -59,7 +72,8 @@ int main(){
     sort(edges, edges+v);
 
     for(int i = 0; i < n; i++) parent[i] = i;
+    size.resize(n, 1);
 
-    cout << "Cost of minimum spanning tree from node 0 is : " << KruskalsMST() << endl; // 17
+    cout << "Cost of minimum spanning tree from node 0 is : " << KruskalsMST(n) << endl; // 17
     return 0;
 }
