@@ -1,3 +1,6 @@
+'''
+Whenever there is a sort of dependency between nodes in a graph, think about topologically sorting them.
+'''
 def findAllRecipes(recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
     recipe_book = {}
     for i, item in enumerate(recipes):
