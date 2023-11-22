@@ -1,4 +1,4 @@
-name: Workflow
+name: Actions
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
       - name: Enforce Structure
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            python .github/workflows/enforce_structure.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.pull_request.number }} pull_request
+            python .github/workflows/enforce_problem_structure.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.pull_request.number }} pull_request
           else
-            python .github/workflows/enforce_structure.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.sha }} push
+            python .github/workflows/enforce_problem_structure.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.sha }} push
           fi
