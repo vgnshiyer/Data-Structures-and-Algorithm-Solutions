@@ -1,3 +1,3 @@
 # Notes
 
-<img src="/static/notes.jpg" />
+<img src="./static/notes.jpg" />
