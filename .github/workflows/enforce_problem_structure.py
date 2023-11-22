@@ -15,9 +15,6 @@ else:
     commit = repo.get_commit(identifier)
     files = commit.files
 
-# get the files changed
-files = pr.get_files()
-
 for file in files:
     if file.filename.startswith('problems/'):
         # extract the problem name from the file path
