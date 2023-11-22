@@ -18,6 +18,16 @@ Here's how you can get involved:
 ## Contributing Guidelines
 
 - Have clear and meaningful filenames. (eg. `CoinChange.py`)
+- Follow below directory structure
+```
+TOPIC_NAME/
+└───problems/
+    └───problem_name/
+        ├───main.py
+        ├───Readme.md
+        └───static/
+            └───notes.png
+```
 - Give you PR an accurate title. (eg. _"Add: Coin change problem"_)
 - One solution per PR.
 - Write clean industry standard code. (Meaningful variable names and function names, easy to understand)
