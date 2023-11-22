@@ -26,7 +26,7 @@ TOPIC_NAME/
         ├───main.py
         └───Readme.md
 ```
-- - Refer to the [problem README template](./.github/README_TEMPLATE.md)
+- Refer to the [problem README template](./.github/README_TEMPLATE.md)
 - Give you PR an accurate title. (eg. _"Add: Coin change problem"_)
 - One solution per PR.
 - Write clean industry standard code. (Meaningful variable names and function names, easy to understand)
