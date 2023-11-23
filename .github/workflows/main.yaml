@@ -27,6 +27,7 @@ jobs:
 
       - name: Enforce Structure
         run: |
+          echo "Event name: ${{ github.event_name }}"
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             python .github/workflows/enforce_problem_structure.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.pull_request.number }} pull_request
           else
