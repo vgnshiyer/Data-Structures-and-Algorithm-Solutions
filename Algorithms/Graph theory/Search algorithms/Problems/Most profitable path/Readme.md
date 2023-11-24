@@ -11,3 +11,5 @@
 - We use the path to trace bob to node 0, while we are making comparisons
 - Trace bob back to node 0, make comparisons and update amount
 - Finally, add the cost for the max path from node 0 to any leaf node
+
+![notes](notes.jpg)

@@ -1,5 +1,5 @@
 class DSU:
-    def __init  __(self, n):
+    def __init__(self, n):
         self.n = n
         self.parent = [i for i in range(n)]
         # initialize each node to be a component by its own
