@@ -21,7 +21,7 @@ class HashMap:
         hash_index = self._hash_function(k)
         for item in self.table[hash_index]:
             if item.key == k: return item.val
-        raise Exception("Item not found.")
+        raise ItemNotFoundException
 
     def remove(self, k):
         hash_index = self._hash_function(k)
@@ -29,4 +29,14 @@ class HashMap:
             if item.key == k:
                 del self.table[hash_index][index]
                 return
-        raise Exception("Item not found.")
+        raise ItemNotFoundException
+
+    def __contains__(self, k):
+        hash_index = self._hash_function(k)
+        for item in self.table[hash_index]:
+            if item.key == k:
+                return True
+        return False
+
+class ItemNotFoundException(Exception):
+    pass
