@@ -1,3 +1,8 @@
+'''
+__str__ : represent class objects as a string
+__repr__ : returns a printable version of an object -> must be used for debugging -> python falls to this method if __str__ is not implemented
+'''
+
 from hash_table import HashMap, ItemNotFoundException
 
 class Item:
@@ -64,6 +69,13 @@ class Cache:
         self.linked_list = LinkedList()
 
     def set(self, query, results):
+        '''
+        Stores the results of the query in cache.
+
+        If query result was already present, stores the updated results. If the
+        size of the cache exceeds, it removes the least recently used query result
+        from the cache.
+        '''
         if query in self.hash_table:
             item = self.hash_table.get(query)
             item.results = results
@@ -79,6 +91,11 @@ class Cache:
                 self.hash_table.remove(removed_query)
 
     def get(self, query):
+        '''
+        Gets the results of query stored in cache.
+
+        If query was not cached, returns an ItemNotFoundException
+        '''
         try:
             item = self.hash_table.get(query)
             self.linked_list.update(item)
