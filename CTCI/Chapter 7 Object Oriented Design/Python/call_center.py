@@ -3,9 +3,18 @@ from collections import deque
 from functools import wraps
 from enum import Enum
 from typing import List
-import time
+import time, random, asyncio, datetime
 
-prime_it = lambda coro: wraps(coro)(lambda *a, **kw: [ci := coro(*a, **kw), next(ci)][0])
+class Severity(Enum):
+    LOW = 0
+    MEDIUM = 1
+    HIGH = 2
+
+@dataclass
+class Call:
+    caller_name: str
+    severity: Severity
+    resolved: bool = False
 
 @dataclass
 class Employee:
@@ -19,46 +28,26 @@ class Employee:
             self.Id = Employee.next_id
             Employee.next_id += 1
 
-        self.phone = self.telephone()
-
     def busy(self) -> None:
         self.available = False
 
     def is_available(self) -> None:
         self.available = True
 
-    @prime_it
-    def telephone(self):
+    async def process_call(self, call: Call):
         identity = f'{self.__class__.__name__}: {self.Id}'
-        while True:
-            try:
-                call = (yield)
-                if call and isinstance(call, Call):
-                    print(f"{identity} answered the call. Caller: {call.caller_name}")
-                    self.busy()
-                    time.sleep(.5)
-                    call.resolved = self.can_resolve(call)
+        print(f"{identity} answered the call. Caller: {call.caller_name}")
+        self.busy()
 
-                    if call.resolved: print("Call ended.")
-                    else: print("Call could not be resolved. Needs escalation.")
-                    self.is_available()
-            except GeneratorExit:
-                print(f"{identity} Accepting no more calls")
-                return
+        await asyncio.sleep(random.random()) # employee trying to resolve the call
 
-class Severity(Enum):
-    LOW = 0
-    MEDIUM = 1
-    HIGH = 2
-
-@dataclass
-class Call:
-    caller_name: str
-    severity: Severity
-    resolved: bool = False
-
-    def assign(self, callee: Employee):
-        callee.phone.send(self)
+        call.resolved = self.can_resolve(call)
+        if call.resolved: 
+            print("Call ended.")
+        else: 
+            print("Call could not be resolved. Needs escalation.")
+        
+        self.is_available()
 
 class Operator(Employee):
     def can_resolve(self, call: Call):
@@ -80,21 +69,43 @@ class CallCenter:
 
         self.queue = deque()
 
-    def dispatch(self, call: Call) -> None:
-        if not call.resolved:
-            self._transfer(call, self.operators)
-        
-        # call could not be resolved by operator or there were no operators available
-        if not call.resolved:
-            self._transfer(call, self.supervisors)
+    async def dispatch(self, calls: asyncio.Queue) -> None:
+        while not calls.empty():
+            call = await calls.get()
 
-        # call could not be resolved by supervisor or there were no supervisors available
-        if not call.resolved:
-            self._transfer(call, self.directors)
+            if not call.resolved:
+                await self._transfer(call, self.operators)
 
-        self.queue.append(call)
-    
-    def _transfer(self, call: Call, employees: List[Employee]):
+            if not call.resolved:
+                await self._transfer(call, self.supervisors)
+            
+            if not call.resolved:
+                await self._transfer(call, self.directors)
+
+            if call.resolved:
+                calls.task_done()
+
+    async def _transfer(self, call: Call, employees: List[Employee]):
         for employee in employees:
             if employee.available:
-                call.assign(employee)
+                await employee.process_call(call)
+
+if __name__ == '__main__':
+    operators, supervisors, directors = 3, 2, 1
+    cc = CallCenter(operators, supervisors, directors)
+
+    t0 = datetime.datetime.now()
+
+    async def main():
+        calls = asyncio.Queue()
+        await calls.put(Call("John", Severity.LOW))
+        await calls.put(Call("Jane", Severity.MEDIUM))
+        await calls.put(Call("Jack", Severity.HIGH))
+
+        for _ in range(operators + supervisors + directors):
+            asyncio.create_task(cc.dispatch(calls))        
+
+        await calls.join()
+
+    asyncio.run(main())
+    print(f"total time to resolve all calls: {(datetime.datetime.now() - t0).total_seconds()}")
