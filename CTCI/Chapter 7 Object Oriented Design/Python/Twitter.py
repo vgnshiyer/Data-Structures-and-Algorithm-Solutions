@@ -1,14 +1,17 @@
+from dataclasses import dataclass
+from typing import Optional, List, Set
+
+@dataclass
 class User:
-    def __init__(self, userId):
-        self.userId = userId
-        self.followers = set()
-        self.followees = set()
-        self.tweets = []
+    userId: int
+    followers: Optional[Set] = set()
+    followees: Optional[Set] = set()
+    tweets: Optional[List] = []
 
     def addTweet(self, tweet):
         self.tweets.append(tweet)
 
-    def getNewsFeed(self):
+    def getFeed(self):
         return list(self.tweets)
 
     def addFollower(self, follower):
@@ -29,24 +32,29 @@ class User:
         return self.followees
 
 class Twitter:
-
     def __init__(self):
+        # User Id <==> User
         self.users = {}
         self.timestamp = 1
 
+    def _get_or_create(userId: int) -> User:
+        if userId not in self.users:
+            self.user[userId] = User(userId)
+        return self.user[userId]
+
     def postTweet(self, userId: int, tweetId: int) -> None:
-        if userId not in self.users: self.users[userId] = User(userId)
-        
-        user = self.users[userId]
+        user = self._get_or_create(userId)
         user.addTweet((-self.timestamp, tweetId))
         self.timestamp += 1
 
-    def getNewsFeed(self, userId: int) -> list[int]:
+    def getFeed(self, userId: int) -> list[int]:
         if userId in self.users:
             user = self.users[userId]
             followees = user.getFollowees()
 
             heap = []
+            # insert only the latest tweet of followees and the user
+            # store (timestamp, tweetId, user, prev_index_from_end)
             for followee in followees: 
                 if len(followee.tweets): heapq.heappush(heap, followee.tweets[-1] + (followee,len(followee.tweets)-2)) ## get most recent tweets
             if len(user.tweets): heapq.heappush(heap, user.tweets[-1] + (user,len(user.tweets)-2))
@@ -59,12 +67,8 @@ class Twitter:
             return feed
 
     def follow(self, followerId: int, followeeId: int) -> None:
-        if followerId not in self.users: self.users[followerId] = User(followerId)
-        if followeeId not in self.users: self.users[followeeId] = User(followeeId)
-
-        follower = self.users[followerId]
-        followee = self.users[followeeId]
-
+        follower = self._get_or_create(followerId)
+        followee = self._get_or_create(followeeId)
         follower.addFollowee(followee)
         followee.addFollower(follower)
 
@@ -72,6 +76,5 @@ class Twitter:
         if followerId in self.users and followeeId in self.users:
             follower = self.users[followerId]
             followee = self.users[followeeId]
-
             follower.removeFollowee(followee)
             followee.removeFollower(follower)
