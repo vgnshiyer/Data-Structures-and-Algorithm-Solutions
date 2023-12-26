@@ -16,6 +16,9 @@ class Call:
     severity: Severity
     resolved: bool = False
 
+    def end_call(self):
+        self.resolved = True
+
 @dataclass
 class Employee:
     Id: int = None
@@ -41,9 +44,8 @@ class Employee:
 
         await asyncio.sleep(random.random()) # employee trying to resolve the call
 
-        call.resolved = self.can_resolve(call)
-        if call.resolved: 
-            print("Call ended.")
+        if self.can_resolve(call): 
+            call.end_call()
         else: 
             print("Call could not be resolved. Needs escalation.")
         
