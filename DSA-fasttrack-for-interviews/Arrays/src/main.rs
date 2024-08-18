@@ -1,11 +1,11 @@
-pub mod contains_duplicate;
-pub mod valid_anagrams;
-pub mod two_sum;
-pub mod group_anagrams;
-pub mod top_k_elements;
-pub mod product_except_self;
-pub mod valid_sudoku;
-pub mod longest_consecutive_seq;
+mod contains_duplicate;
+mod valid_anagrams;
+mod two_sum;
+mod group_anagrams;
+mod top_k_elements;
+mod product_except_self;
+mod valid_sudoku;
+mod longest_consecutive_seq;
 
 fn main() {
     println!("{}", contains_duplicate::run(vec![1,2,1,3]));
