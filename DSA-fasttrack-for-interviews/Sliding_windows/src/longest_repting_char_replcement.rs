@@ -27,6 +27,7 @@ impl window {
     }
 }
 
+// time: O(n) space: O(n)
 pub fn run(s: String, k: i32) -> i32 {
     // window_len - max_freq > k --> remove from left
     let mut window = window::new();
