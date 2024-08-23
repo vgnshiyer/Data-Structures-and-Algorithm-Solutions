@@ -2,6 +2,7 @@ mod valid_parenthesis;
 mod min_stack;
 mod rev_polish;
 mod gen_parenthesis;
+mod daily_temperatures;
 
 fn main() {
     println!("{}", valid_parenthesis::run("()".to_string()));
@@ -15,4 +16,6 @@ fn main() {
     ]));
 
     println!("{:?}", gen_parenthesis::run(3));
+
+    println!("{:?}", daily_temperatures::run(vec![73,74,75,71,69,72,76,73]));
 }
