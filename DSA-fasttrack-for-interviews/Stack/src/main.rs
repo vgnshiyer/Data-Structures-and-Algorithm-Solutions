@@ -1,6 +1,7 @@
 mod valid_parenthesis;
 mod min_stack;
 mod rev_polish;
+mod gen_parenthesis;
 
 fn main() {
     println!("{}", valid_parenthesis::run("()".to_string()));
@@ -12,4 +13,6 @@ fn main() {
         "/".to_string(),
         "+".to_string()
     ]));
+
+    println!("{:?}", gen_parenthesis::run(3));
 }
