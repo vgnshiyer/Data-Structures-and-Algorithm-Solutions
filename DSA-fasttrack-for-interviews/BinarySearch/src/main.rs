@@ -3,6 +3,7 @@ mod search_in_2_d;
 mod koko_eating_bananas;
 mod find_min_rot_sort_arr;
 mod search_rot_sort_arr;
+mod time_based_key_val_store;
 
 fn main() {
     println!("{}", binary_search::run(vec![-1,0,3,5,9,12], 9));
