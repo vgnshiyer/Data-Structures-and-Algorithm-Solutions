@@ -1,16 +1,4 @@
-struct ListNode {
-    val: i32,
-    pub next: Option<Box<ListNode>>
-}
-
-impl ListNode {
-    fn new(val: i32) -> Self {
-        ListNode {
-            next: None,
-            val
-        }
-    }
-}
+use crate::cmn::ListNode;
 
 pub fn run(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     fn reverse(
