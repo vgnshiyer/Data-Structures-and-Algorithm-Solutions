@@ -14,7 +14,7 @@ bool doesIntersect(int a1, int a2, int b1, int b2){
 
         b1-------------b2
     a1-----------------------a2   */
-    if ((b1 >= a1 && b1 <= a2))
+    if (b1 >= a1 && b1 <= a2)
         return true;
     return false;
 }
