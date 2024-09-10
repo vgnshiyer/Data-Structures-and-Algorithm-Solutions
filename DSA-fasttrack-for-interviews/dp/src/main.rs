@@ -6,6 +6,8 @@ mod palidromic_substr;
 mod decode_ways;
 mod coin_change;
 mod max_product;
+mod word_break;
+mod longest_incr_subseq;
 
 fn main() {
     println!("{}", climb_stairs::run(3));
@@ -23,4 +25,8 @@ fn main() {
     println!("{}", coin_change::run(vec![2], 3));
 
     println!("{}", max_product::run(vec![2, 3, -2, 4]));
+
+    println!("{}", word_break::run("catsandog".to_string(), vec!["cats".to_string(), "and".to_string(), "dog".to_string()]));
+
+    println!("{}", longest_incr_subseq::run(vec![10,9,2,5,3,7,101,18]));
 }
