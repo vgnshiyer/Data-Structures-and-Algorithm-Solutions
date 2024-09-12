@@ -8,6 +8,7 @@ mod coin_change;
 mod max_product;
 mod word_break;
 mod longest_incr_subseq;
+mod partition_eq_subset_sum;
 
 fn main() {
     println!("{}", climb_stairs::run(3));
@@ -29,4 +30,6 @@ fn main() {
     println!("{}", word_break::run("catsandog".to_string(), vec!["cats".to_string(), "and".to_string(), "dog".to_string()]));
 
     println!("{}", longest_incr_subseq::run(vec![10,9,2,5,3,7,101,18]));
+
+    println!("{}", partition_eq_subset_sum::run(vec![100,100,100,100,100,100,100,100]));
 }
