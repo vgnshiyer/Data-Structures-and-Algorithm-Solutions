@@ -12,6 +12,12 @@ mod partition_eq_subset_sum;
 mod longest_cmn_subseq;
 mod coin_change2;
 
+mod buy_and_sell_stocks;
+mod buy_and_sell_stocks2;
+mod buy_and_sell_stocks3;
+mod buy_and_sell_stocks4;
+mod buy_and_sell_stocks5;
+
 fn main() {
     println!("{}", climb_stairs::run(3));
 
@@ -38,4 +44,14 @@ fn main() {
     println!("{}", longest_cmn_subseq::run("abcde".to_string(), "ace".to_string()));
 
     println!("{}", coin_change2::run(5, vec![1,2,5]));
+
+    println!("{}", buy_and_sell_stocks::run(vec![7,1,5,3,6,4]));
+
+    println!("{}", buy_and_sell_stocks2::run(vec![7,1,5,3,6,4]));
+
+    println!("{}", buy_and_sell_stocks3::run(vec![3,3,5,0,0,3,1,4]));
+
+    println!("{}", buy_and_sell_stocks4::run(2, vec![2,4,1]));
+
+    println!("{}", buy_and_sell_stocks5::run(vec![1,2,3,0,2]));
 }
