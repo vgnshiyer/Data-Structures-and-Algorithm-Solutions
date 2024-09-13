@@ -9,6 +9,7 @@ mod max_product;
 mod word_break;
 mod longest_incr_subseq;
 mod partition_eq_subset_sum;
+mod longest_cmn_subseq;
 
 fn main() {
     println!("{}", climb_stairs::run(3));
@@ -32,4 +33,6 @@ fn main() {
     println!("{}", longest_incr_subseq::run(vec![10,9,2,5,3,7,101,18]));
 
     println!("{}", partition_eq_subset_sum::run(vec![100,100,100,100,100,100,100,100]));
+
+    println!("{}", longest_cmn_subseq::run("abcde".to_string(), "ace".to_string()));
 }
