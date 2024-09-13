@@ -10,6 +10,7 @@ mod word_break;
 mod longest_incr_subseq;
 mod partition_eq_subset_sum;
 mod longest_cmn_subseq;
+mod coin_change2;
 
 fn main() {
     println!("{}", climb_stairs::run(3));
@@ -35,4 +36,6 @@ fn main() {
     println!("{}", partition_eq_subset_sum::run(vec![100,100,100,100,100,100,100,100]));
 
     println!("{}", longest_cmn_subseq::run("abcde".to_string(), "ace".to_string()));
+
+    println!("{}", coin_change2::run(5, vec![1,2,5]));
 }
