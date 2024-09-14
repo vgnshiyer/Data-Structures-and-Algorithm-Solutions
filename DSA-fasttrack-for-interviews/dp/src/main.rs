@@ -18,6 +18,9 @@ mod buy_and_sell_stocks3;
 mod buy_and_sell_stocks4;
 mod buy_and_sell_stocks5;
 
+mod target_sum;
+mod interleaving_str;
+
 fn main() {
     println!("{}", climb_stairs::run(3));
 
@@ -54,4 +57,8 @@ fn main() {
     println!("{}", buy_and_sell_stocks4::run(2, vec![2,4,1]));
 
     println!("{}", buy_and_sell_stocks5::run(vec![1,2,3,0,2]));
+
+    println!("{}", target_sum::run(vec![1,1,1,1,1], 3));
+
+    println!("{}", interleaving_str::run("aabcc".to_string(), "dbbca".to_string(), "aadbbcbcac".to_string()));
 }
