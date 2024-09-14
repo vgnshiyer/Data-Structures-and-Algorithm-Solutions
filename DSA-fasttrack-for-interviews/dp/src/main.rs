@@ -20,6 +20,7 @@ mod buy_and_sell_stocks5;
 
 mod target_sum;
 mod interleaving_str;
+mod edit_distance;
 
 fn main() {
     println!("{}", climb_stairs::run(3));
@@ -61,4 +62,6 @@ fn main() {
     println!("{}", target_sum::run(vec![1,1,1,1,1], 3));
 
     println!("{}", interleaving_str::run("aabcc".to_string(), "dbbca".to_string(), "aadbbcbcac".to_string()));
+
+    println!("{}", edit_distance::run("horse".to_string(), "ros".to_string()));
 }
