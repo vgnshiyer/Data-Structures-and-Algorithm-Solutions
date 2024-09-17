@@ -1,9 +1,9 @@
-struct UnionFind {
+pub struct UnionFind {
     parents: Vec<usize>,
 }
 
 impl UnionFind {
-    fn new(size: usize) -> Self {
+    pub fn new(size: usize) -> Self {
         UnionFind {
             parents: {
                 let mut parents: Vec<usize> = vec![0; size + 1];
@@ -15,7 +15,7 @@ impl UnionFind {
         }
     }
 
-    fn union(&mut self, a: usize, b: usize) {
+    pub fn union(&mut self, a: usize, b: usize) {
         let pa = self.find(a);
         let pb = self.find(b);
         if pa != pb {
@@ -23,7 +23,7 @@ impl UnionFind {
         }
     }
 
-    fn find(&mut self, a: usize) -> usize {
+    pub fn find(&mut self, a: usize) -> usize {
         if self.parents[a] == a {
             return a;
         }
